@@ -1,0 +1,42 @@
+SpMax_L: Leading eigenvalue from Laplace matrix
+J_Dz(e): Balaban-like index from Barysz matrix weighted by Sanderson electronegativity
+nHM: Number of heavy atoms
+F01[N-N]: Frequency of N-N at topological distance 1
+F04[C-N]: Frequency of C-N at topological distance 4
+NssssC: Number of atoms of type ssssC
+nCb-: Number of substituted benzene C(sp2)
+C%: Percentage of C atoms
+nCp: Number of terminal primary C(sp3)
+nO: Number of oxygen atoms
+F03[C-N]: Frequency of C-N at topological distance 3
+SdssC: Sum of dssC E-states
+HyWi_B(m): Hyper-Wiener-like index (log function) from Burden matrix weighted by mass
+LOC: Lopping centric index
+SM6_L: Spectral moment of order 6 from Laplace matrix
+F03[C-O]: Frequency of C - O at topological distance 3
+Me: Mean atomic Sanderson electronegativity (scaled on Carbon atom)
+Mi: Mean first ionization potential (scaled on Carbon atom)
+nN-N: Number of N hydrazines
+nArNO2: Number of nitro groups (aromatic)
+nCRX3: Number of CRX3
+SpPosA_B(p): Normalized spectral positive sum from Burden matrix weighted by polarizability
+nCIR: Number of circuits
+B01[C-Br]: Presence/absence of C - Br at topological distance 1
+B03[C-Cl]: Presence/absence of C - Cl at topological distance 3
+N-073: Ar2NH / Ar3N / Ar2N-Al / R..N..R
+SpMax_A: Leading eigenvalue from adjacency matrix (Lovasz-Pelikan index)
+Psi_i_1d: Intrinsic state pseudoconnectivity index - type 1d
+B04[C-Br]: Presence/absence of C - Br at topological distance 4
+SdO: Sum of dO E-states
+TI2_L: Second Mohar index from Laplace matrix
+nCrt: Number of ring tertiary C(sp3)
+C-026: R--CX--R
+F02[C-N]: Frequency of C - N at topological distance 2
+nHDon: Number of donor atoms for H-bonds (N and O)
+SpMax_B(m): Leading eigenvalue from Burden matrix weighted by mass
+Psi_i_A: Intrinsic state pseudoconnectivity index - type S average
+nN: Number of Nitrogen atoms
+SM6_B(m): Spectral moment of order 6 from Burden matrix weighted by mass
+nArCOOR: Number of esters (aromatic)
+nX: Number of halogen atoms
+experimental class: ready biodegradable (RB) and not ready biodegradable (NRB)
