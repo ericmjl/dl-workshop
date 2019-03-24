@@ -13,8 +13,8 @@ dependencies:
 - scipy
 - matplotlib
 - seaborn
-- autograd
 - nodejs
 - ipywidgets
 - pyyaml
 - pyjanitor
+- jax
