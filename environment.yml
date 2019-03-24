@@ -17,4 +17,5 @@ dependencies:
 - ipywidgets
 - pyyaml
 - pyjanitor
-- jax
+- pip:
+  - jax
