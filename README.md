@@ -24,3 +24,7 @@ If you want `jax` with GPU, you will need to build from source, or follow the [i
 ## Key Ideas
 
 The key idea for this tutorial is that if we really study deep learning's fundamental model, linear regression, then we can get a better understanding of the components - a model with parameters, a loss function, and an optimizer to change the parameters to minimize the loss. Most of us who become practitioners (rather than researchers) can then take for granted that the same ideas apply to any more complex/deeper model.
+
+## Feedback
+
+I'd love to hear how well this workshop went for you. Please consider [leaving feedback so I can improve the workshop](https://ericma1.typeform.com/to/Tv185B).
