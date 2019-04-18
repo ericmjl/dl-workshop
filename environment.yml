@@ -18,3 +18,7 @@ dependencies:
 - pyyaml
 - pyjanitor
 - tqdm
+- pip
+- pip:
+  - jax
+  - jaxlib
