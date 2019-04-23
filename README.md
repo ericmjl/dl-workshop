@@ -10,7 +10,7 @@ You can get started using one of the following methods.
 
 ```bash
 $ conda env create -f environment.yml
-$ source activate dl-workshop
+$ conda activate dl-workshop  # older versions of conda use `source activate` rather than `conda activate`
 $ python -m ipykernel install --user --name dl-workshop
 $ jupyter labextension install @jupyter-widgets/jupyterlab-manager
 ```
