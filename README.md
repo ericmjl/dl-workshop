@@ -9,10 +9,10 @@ You can get started using one of the following methods.
 ### 1. Setup using `conda` environments
 
 ```bash
-$ conda env create -f environment.yml
-$ conda activate dl-workshop  # older versions of conda use `source activate` rather than `conda activate`
-$ python -m ipykernel install --user --name dl-workshop
-$ jupyter labextension install @jupyter-widgets/jupyterlab-manager
+conda env create -f environment.yml
+conda activate dl-workshop  # older versions of conda use `source activate` rather than `conda activate`
+python -m ipykernel install --user --name dl-workshop
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
 ```
 
 If you want `jax` with GPU, you will need to build from source, or follow the [installation instructions](https://github.com/google/jax#installation)
@@ -27,9 +27,9 @@ If you are using Jupyter Lab, you will want to also ensure that `ipywidgets` is 
 
 ```bash
 # only if you don't have ipywidgets installed.
-$ conda install -c conda-forge ipywidgets
+conda install -c conda-forge ipywidgets
 # the next line is necessary.
-$ jupyter labextension install @jupyter-widgets/jupyterlab-manager
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
 ```
 
 ## Key Ideas
