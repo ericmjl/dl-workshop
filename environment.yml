@@ -8,6 +8,7 @@ dependencies:
 - jupyter
 - jupyterlab
 - conda
+- mamba
 - scikit-learn
 - numpy
 - scipy
@@ -19,6 +20,10 @@ dependencies:
 - pyjanitor
 - tqdm
 - pip
+- nodejs
+- holoviews
+- hvplot
+- bokeh
 - pip:
   - jax
   - jaxlib
