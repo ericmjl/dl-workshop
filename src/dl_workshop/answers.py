@@ -12,13 +12,15 @@ def mse(y_true: np.ndarray, y_pred: np.ndarray) -> float:
 
 
 def linear_model(theta, x):
-    w, b = theta
+    w = theta["w"]
+    b = theta["b"]
     return w * x + b
 
 def initialize_linear_params():
-    w = npr.normal()
-    b = npr.normal()
-    return w, b
+    params = dict()
+    params["w"] = npr.normal()
+    params["b"] = npr.normal()
+    return params
 
 
 def mseloss(theta, model, x, y):
@@ -29,13 +31,35 @@ dmseloss = grad(mseloss)
 
 from tqdm.autonotebook import tqdm
 
-def linear_model_optimization(theta, model, x, y):
+def model_optimization_loop(theta, model, loss, x, y, n_steps=3000, step_size=0.001):
+    dloss = grad(loss)
     losses = []
-    w, b = theta
-    for i in tqdm(range(3000)):
-        dw, db = dmseloss(theta, model, x, y)
-        w = w - dw * 0.001
-        b = b - db * 0.001
-        theta = (w, b)
-        losses.append(mseloss(theta, model, x, y))
+    for i in tqdm(range(n_steps)):
+        grads = dloss(theta, model, x, y)
+        for name, param in theta.items():
+            theta[name] = theta[name] - grads[name] * step_size
+        losses.append(loss(theta, model, x, y))
     return losses, theta
+
+
+def logistic(x):
+    """Logistic transform."""
+    return 1 / (1 + np.exp(-x))
+
+
+def logistic_model(theta, x):
+    w = theta["w"]
+    b = theta["b"]
+    z = w * x + b
+    y = logistic(z)
+    return y
+
+
+def binary_cross_entropy(y_true, y_preds):
+    """Function for binary cross entropy."""
+    return np.sum(y_true * np.log(y_preds) + (1 - y_true) * np.log(1 - y_preds))
+
+
+def logistic_loss(theta, model, x, y):
+    preds = model(theta, x)
+    return -binary_cross_entropy(y, preds)
