@@ -26,7 +26,7 @@ install:
   - python -m ipykernel install --user --name dl-workshop
 
   # Finally, ensure that the custom package is installed.
-  - pip install -e .
+  - cd src && pip install -e . && cd ..
   # Show packages in environment, for debugging purposes
   - conda list
 
