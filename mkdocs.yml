@@ -1,0 +1,58 @@
+site_name: Differential Progamming Tutorial
+theme:
+  name: 'material'
+  palette:
+    primary: 'green'
+    accent: 'green'
+    icon:
+      logo: 'library_books'
+  features:
+    - tabs
+
+docs_dir: notebooks/
+
+nav:
+  - Home: index.md
+  - Introduction to Differential Programming: tutorial.ipynb
+  - JAX Programming Idioms: jax-programming.ipynb
+  - The stax Module: jax-stax.ipynb
+
+plugins:
+  - search:
+      separator: '[\s\-\.]+'
+      lang:
+        - en
+  - mknotebooks:
+      execute: true
+      timeout: 600
+      binder: true
+      binder_service_name: "gh"
+      binder_branch: "master"
+
+# Taken from here: https://squidfunk.github.io/mkdocs-material/extensions/codehilite/
+markdown_extensions:
+  - codehilite
+  - pymdownx.arithmatex
+  - pymdownx.details
+  - markdown.extensions.footnotes
+
+extra_css:
+  - https://unpkg.com/mermaid@7.1.2/dist/mermaid.css
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  - https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js
+
+repo_name: 'ericmjl/dl-workshop'
+repo_url: 'https://github.com/ericmjl/dl-workshop'
+
+extra:
+  social:
+    - icon: 'material/email'
+      link: 'http://www.shortwhale.com/ericmjl'
+    - icon: 'fontawesome/brands/github'
+      link: 'https://github.com/ericmjl'
+    - icon: 'fontawesome/brands/twitter'
+      link: 'https://twitter.com/ericmjl'
+    - icon: 'fontawesome/brands/linkedin'
+      link: 'https://linkedin.com/in/ericmjl'

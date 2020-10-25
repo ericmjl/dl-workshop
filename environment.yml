@@ -21,9 +21,12 @@ dependencies:
 - tqdm
 - pip
 - nodejs
-- holoviews
-- hvplot
-- bokeh
+- black
+- pydocstyle
+- pyprojroot
 - pip:
   - jax
   - jaxlib
+  - mkdocs
+  - mkdocs-material
+  - mknotebooks

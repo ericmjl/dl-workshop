@@ -1,0 +1,52 @@
+language: python
+matrix:
+  include:
+    - python: 3.5  # we don't actually use this
+      env: PYTHON_VERSION=3.7
+
+install:
+  # We do this conditionally because it saves us some downloading if the
+  # version is the same.
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda config --add channels conda-forge
+  - conda install -c conda-forge mamba
+
+  # Show information about environment.
+  # Useful for debugging any issues with conda
+  - conda info -a
+
+  # Install Python, py.test, and required packages.
+  - mamba env create -f environment.yml
+  - source activate dl-workshop
+  - python -m ipykernel install --user --name dl-workshop
+
+  # Finally, ensure that the custom package is installed.
+  - pip install -e src/
+  # Show packages in environment, for debugging purposes
+  - conda list
+
+script:
+  # Build official website
+  - mkdocs build
+
+deploy:
+  # Publish the official website
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+    keep_history: false
+    on:
+      branch: master
+    local_dir: site/
+    target_branch: gh-pages
+
+# after_success:
+#   - bash <(curl -s https://codecov.io/bash)
+
+# notifications:
+#   email: true
