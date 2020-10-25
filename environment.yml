@@ -23,6 +23,7 @@ dependencies:
 - nodejs
 - black
 - pydocstyle
+- pyprojroot
 - pip:
   - jax
   - jaxlib
