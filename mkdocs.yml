@@ -13,9 +13,17 @@ docs_dir: notebooks/
 
 nav:
   - Home: index.md
-  - Introduction to Differential Programming: tutorial.ipynb
-  - JAX Programming Idioms: jax-programming.ipynb
-  - The stax Module: jax-stax.ipynb
+  - Preliminaries:
+    - Preface: 00-preliminaries/01-preface.md
+    - Prerequisites: 00-preliminaries/02-prerequisites.md
+    - Setup: 00-preliminaries/03-setup.md
+  - Introduction to Differential Programming: 01-neural-nets-from-scratch.ipynb
+  - JAX Programming Idioms: 02-jax-programming.ipynb
+  - The stax Module: 03-models-with-stax.ipynb
+  - Gaussian Clustering:
+    - Introduction: 04-gaussian-clustering/01-intro-gaussian-clustering.ipynb
+    - Dirichlet Processes: 04-gaussian-clustering/02-dirichlet-processes.ipynb
+    - DP-GMM: 04-gaussian-clustering/03-dirichlet-process-clustering.ipynb
 
 plugins:
   - search:
