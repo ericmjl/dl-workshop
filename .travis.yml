@@ -4,6 +4,13 @@ matrix:
     - python: 3.5  # we don't actually use this
       env: PYTHON_VERSION=3.7
 
+sudo: required
+
+before_install:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install -y ffmpeg; fi
+
+
 install:
   # We do this conditionally because it saves us some downloading if the
   # version is the same.
