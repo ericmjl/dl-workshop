@@ -29,5 +29,5 @@ dependencies:
   - jaxlib
   - mkdocs
   - mkdocs-material
-  - mknotebooks
+  - mknotebooks>=0.6.1
   - celluloid
