@@ -1,5 +1,3 @@
-from jax.nn.functions import softmax
-from jax.scipy.special import expit
 import jax.numpy as np
 from jax.scipy import stats
 
