@@ -35,3 +35,4 @@ dependencies:
 - pip:
   - mknotebooks>=0.6.1
   - celluloid>=0.2.0
+  - -e src/
