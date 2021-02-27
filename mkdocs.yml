@@ -25,10 +25,9 @@ nav:
     - Neural Networks: 01-differential-programming/05-neural-networks.ipynb
   - JAX Programming Idioms:
     - Introduction: 02-jax-idioms/00-introduction.ipynb
-    - Mapping: 02-jax-idioms/01-vmap.ipynb
-    - Partials and closures: 02-jax-idioms/02-partials.ipynb
-    - Scanning: 02-jax-idioms/03-lax-scan.ipynb
-    - Random Numbers: 02-jax-idioms/04-random-numbers.ipynb
+    - Mapping: 02-jax-idioms/01-loopless-loops.ipynb
+    - Scanning: 02-jax-idioms/02-lax-scan.ipynb
+    - Random Numbers: 02-jax-idioms/04-deterministic-randomness.ipynb
     - Compositionality: 02-jax-idioms/05-composition-example.ipynb
   - The stax Module:
     - Linear Models with stax: 03-stax/01-linear.ipynb
@@ -37,6 +36,9 @@ nav:
     - Introduction: 04-gaussian-clustering/01-intro-gaussian-clustering.ipynb
     - Dirichlet Processes: 04-gaussian-clustering/02-dirichlet-processes.ipynb
     - DP-GMM: 04-gaussian-clustering/03-dirichlet-process-clustering.ipynb
+  - Appendix:
+    - Partials: appendix/02-partials.ipynb
+
 
 plugins:
   - search:

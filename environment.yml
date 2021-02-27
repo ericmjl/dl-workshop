@@ -26,6 +26,12 @@ dependencies:
 - scipy>=1.6.0
 - seaborn>=0.11.1
 - tqdm>=4.56.0
+- jupyter-lsp>=1.1.4
+- jupyterlab-lsp>=3.4.1
+- python-language-server>=0.36.2
+- toolz>=0.11.1
+- ffmpeg>=4.3.1
+- jupyterlab_code_formatter>=1.4.4
 - pip:
   - mknotebooks>=0.6.1
   - celluloid>=0.2.0

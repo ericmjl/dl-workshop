@@ -30,6 +30,25 @@ def loopless_loops_ex3(node_feats):
     return vmap(partial(concatenate, node_feats=node_feats))(node_feats)
 
 
+
+
+def lax_scan_ex_1(prev_wealth, time, interest_factor):
+    new_wealth = prev_wealth * interest_factor
+    return new_wealth, prev_wealth    
+
+
+def lax_scan_ex_2(num_breaks: int, frac: float) -> np.ndarray:
+    def step(stick_length: float, frac: float):
+        stick = stick_length * frac 
+        remainder = stick_length - stick
+        return remainder, stick
+    
+    fracs = np.array([frac] * num_breaks)
+    final, sticks = lax.scan(step, init=1.0, xs=fracs)
+    return sticks
+
+
+
 def make_gaussian_random_walk_func(num_steps):
     def gaussian_random_walk(key):
         keys = random.split(key, num=num_steps)
