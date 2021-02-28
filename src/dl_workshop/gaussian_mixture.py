@@ -2,7 +2,9 @@ import jax.numpy as np
 from jax.scipy import stats
 
 
-def loglike_one_component(component_weight, component_mu, log_component_scale, datum):
+def loglike_one_component(
+    component_weight, component_mu, log_component_scale, datum
+):
     """Log likelihood of datum under one component of the mixture.
 
     Defined as the log likelihood of observing that datum from the component
@@ -30,8 +32,9 @@ def normalize_weights(weights):
     return weights / np.sum(weights)
 
 
-from jax import vmap
 from functools import partial
+
+from jax import vmap
 
 
 def loglike_across_components(
@@ -45,7 +48,9 @@ def loglike_across_components(
     return logsumexp(loglike_components)
 
 
-def mixture_loglike(log_component_weights, component_mus, log_component_scales, data):
+def mixture_loglike(
+    log_component_weights, component_mus, log_component_scales, data
+):
     """Log likelihood of data (not datum!) under all components of the mixture."""
     ll_per_data = vmap(
         partial(
@@ -76,7 +81,9 @@ def loss_mixture_weights(params, data):
         log_component_weights, component_mus, log_component_scales, data
     )
     alpha_prior = np.ones_like(component_mus) * 2
-    loglike_weights = weights_loglike(log_component_weights, alpha_prior=alpha_prior)
+    loglike_weights = weights_loglike(
+        log_component_weights, alpha_prior=alpha_prior
+    )
 
     total = loglike_mixture + loglike_weights
     return -total
@@ -109,12 +116,20 @@ from jax.scipy.stats import norm
 
 
 def plot_component_norm_pdfs(
-    log_component_weights, component_mus, log_component_scales, xmin, xmax, ax, title
+    log_component_weights,
+    component_mus,
+    log_component_scales,
+    xmin,
+    xmax,
+    ax,
+    title,
 ):
     component_weights = normalize_weights(np.exp(log_component_weights))
     component_scales = np.exp(log_component_scales)
     x = np.linspace(xmin, xmax, 1000).reshape(-1, 1)
-    pdfs = component_weights * norm.pdf(x, loc=component_mus, scale=component_scales)
+    pdfs = component_weights * norm.pdf(
+        x, loc=component_mus, scale=component_scales
+    )
     for component in range(pdfs.shape[1]):
         ax.plot(x, pdfs[:, component])
     ax.set_title(title)
@@ -126,8 +141,8 @@ def get_loss(state, get_params_func, loss_func, data):
     return loss_score
 
 
-from celluloid import Camera
 import matplotlib.pyplot as plt
+from celluloid import Camera
 
 
 def animate_training(params_for_plotting, interval, data_mixture):
@@ -172,7 +187,9 @@ def stick_breaking_weights(beta_draws):
         weight = (1 - occupied_probability) * beta_i
         return occupied_probability + weight, weight
 
-    occupied_probability, weights = lax.scan(weighting, np.array(0.0), beta_draws)
+    occupied_probability, weights = lax.scan(
+        weighting, np.array(0.0), beta_draws
+    )
 
     weights = weights / np.sum(weights)
     return occupied_probability, weights
@@ -211,7 +228,9 @@ def beta_draw_from_weights(weights):
 from jax import ops
 
 
-def component_probs_loglike(log_component_probs, log_concentration, num_components):
+def component_probs_loglike(
+    log_component_probs, log_concentration, num_components
+):
     """Evaluate log likelihood of probability vector under Dirichlet process.
 
     :param log_component_probs: A vector.
@@ -234,18 +253,26 @@ def joint_loglike(
 ):
 
     # logpdf of weights under concentrations prior
-    logp_weights = component_probs_loglike(log_component_weights, log_concentration)
+    logp_weights = component_probs_loglike(
+        log_component_weights, log_concentration
+    )
 
     logp_observed_data = mixture_loglike(
-        log_component_weights, component_mus, log_component_scales, observed_data
+        log_component_weights,
+        component_mus,
+        log_component_scales,
+        observed_data,
     )
     return logp_weights + logp_observed_data
 
 
 def joint_loss(params, data):
-    log_component_weights, log_concentration, component_mus, log_component_scales = (
-        params
-    )
+    (
+        log_component_weights,
+        log_concentration,
+        component_mus,
+        log_component_scales,
+    ) = params
 
     nll = -joint_loglike(*params, observed_data=data)
 

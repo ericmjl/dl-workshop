@@ -2,8 +2,8 @@
 Answers to the main tutorial notebooks.
 """
 import jax.numpy as np
-from jax import grad
 import numpy.random as npr
+from jax import grad
 
 
 def mse(y_true: np.ndarray, y_pred: np.ndarray) -> float:
@@ -34,7 +34,9 @@ dmseloss = grad(mseloss)
 from tqdm.autonotebook import tqdm
 
 
-def model_optimization_loop(theta, model, loss, x, y, n_steps=3000, step_size=0.001):
+def model_optimization_loop(
+    theta, model, loss, x, y, n_steps=3000, step_size=0.001
+):
     dloss = grad(loss)
     losses = []
     for i in tqdm(range(n_steps)):
@@ -60,7 +62,9 @@ def logistic_model(theta, x):
 
 def binary_cross_entropy(y_true, y_preds):
     """Function for binary cross entropy."""
-    return np.sum(y_true * np.log(y_preds) + (1 - y_true) * np.log(1 - y_preds))
+    return np.sum(
+        y_true * np.log(y_preds) + (1 - y_true) * np.log(1 - y_preds)
+    )
 
 
 def logistic_loss(params, model, x, y):
@@ -81,8 +85,7 @@ def f(w):
 
 
 def df(w):
-    """The hand-written derivative of f with respect to w.
-    """
+    """The hand-written derivative of f with respect to w."""
     return 2 * w + 3
 
 

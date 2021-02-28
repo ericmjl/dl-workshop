@@ -1,4 +1,6 @@
-from jax import random, lax, numpy as np, vmap
+from jax import lax
+from jax import numpy as np
+from jax import random, vmap
 
 
 def loopless_loops_ex1(mat1, mat2):
@@ -30,8 +32,6 @@ def loopless_loops_ex3(node_feats):
     return vmap(partial(concatenate, node_feats=node_feats))(node_feats)
 
 
-
-
 def lax_scan_ex_1(prev_wealth, time, interest_factor):
     new_wealth = prev_wealth * interest_factor
     return new_wealth, prev_wealth
@@ -39,7 +39,7 @@ def lax_scan_ex_1(prev_wealth, time, interest_factor):
 
 def lax_scan_ex_2(num_breaks: int, frac: float) -> np.ndarray:
     def step(stick_length: float, frac: float):
-        stick = stick_length * frac 
+        stick = stick_length * frac
         remainder = stick_length - stick
         return remainder, stick
 
@@ -48,7 +48,24 @@ def lax_scan_ex_2(num_breaks: int, frac: float) -> np.ndarray:
     return sticks
 
 
-def randomness_ex_1(key, num_breaks, concentration: float):
+import jax.numpy as np
+
+
+def randomness_ex_1(keys, starting_position):
+    ks = vmap(random.split)(keys)
+    axes = vmap(partial(random.permutation, x=np.array([0, 1])))(ks[:, 0])
+    direction = vmap(partial(random.choice, a=np.array([-1, 1])))(ks[:, 1])
+    change_vectors = axes * np.reshape(direction, (-1, 1))
+
+    def new_position(previous_pos, change_vector):
+        new_pos = previous_pos + change_vector
+        return new_pos, new_pos
+
+    final, history = lax.scan(new_position, starting_position, change_vectors)
+    return final, history
+
+
+def randomness_ex_2(key, num_breaks, concentration: float):
     def step(stick_length: float, key, concentration: float):
         fraction = random.beta(key, a=1, b=concentration)
         stick = stick_length * fraction

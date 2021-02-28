@@ -1,5 +1,5 @@
-from jax import lax
 import jax.numpy as np
+from jax import lax
 
 
 def step(i, state, dlossfunc, get_params, update, model, x, y_true):
@@ -17,7 +17,9 @@ def make_scannable_step(stepfunc):
     return scannable_step
 
 
-def make_training_start(params_initializer, state_initializer, scanfunc, n_steps):
+def make_training_start(
+    params_initializer, state_initializer, scanfunc, n_steps
+):
     def train_one_start(key):
         output_shape, params = params_initializer(key)
         initial_state = state_initializer(params)

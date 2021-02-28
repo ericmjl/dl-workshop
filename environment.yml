@@ -32,6 +32,7 @@ dependencies:
 - toolz>=0.11.1
 - ffmpeg>=4.3.1
 - jupyterlab_code_formatter>=1.4.4
+- pre-commit
 - pip:
   - mknotebooks>=0.6.1
   - celluloid>=0.2.0
