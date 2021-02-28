@@ -27,7 +27,7 @@ nav:
     - Introduction: 02-jax-idioms/00-introduction.ipynb
     - Mapping: 02-jax-idioms/01-loopless-loops.ipynb
     - Scanning: 02-jax-idioms/02-lax-scan.ipynb
-    - Random Numbers: 02-jax-idioms/04-deterministic-randomness.ipynb
+    - Random Numbers: 02-jax-idioms/03-deterministic-randomness.ipynb
     - Compositionality: 02-jax-idioms/05-composition-example.ipynb
   - The stax Module:
     - Linear Models with stax: 03-stax/01-linear.ipynb
