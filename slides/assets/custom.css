@@ -1,0 +1,23 @@
+/* https: //stackoverflow.com/questions/30861845/how-to-use-two-column-layout-with-reveal-js */
+
+.container {
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.col {
+    flex: 1;
+}
+
+.grow {
+    transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+    transform: scale(1.1);
+}
+
+.gutter {
+    border: 5px;
+    border-color: white;
+}

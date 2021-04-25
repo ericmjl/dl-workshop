@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <!-- <link rel="stylesheet" href="dist/reset.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="dist/reveal.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css" integrity="sha512-zu0eodDPCBAZf1vnIgwZ6qchMBt1xqgGkS9vBjVmunoH8pU7cc9OQKBiSQCclpvqySupy9Y1pLZc87VB40G4Sw==" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="dist/theme/black.css" id="theme"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/white.min.css" integrity="sha512-4D8b66djW61D6twJNMNqyRrS8wCmCDyVQaME8E5CyGj2wRGsQUz6Y7qa2W0rEvYaaju9OHGxVPd173eBAaMAOQ==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="assets/custom.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <!-- <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.min.css" integrity="sha512-z8wQkuDRFwCBfoj7KOiu1MECaRVoXx6rZQWL21x0BsVVH7JkqCp1Otf39qve6CrCycOOL5o9vgfII5Smds23rg==" crossorigin="anonymous" />
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section id="title-slide">
+                <h1>Magical NumPy with JAX</h1>
+                <p>Eric J. Ma</p>
+                <p>PyCon 2021</p>
+            </section>
+            <section id="about-me">
+                <h2>About Me</h2>
+                <br>
+                <div class="container">
+                    <div class="col grow">
+                        2017-Present: Novartis Institutes for BioMedical Research
+                    </div>
+                    <div class="col grow">
+                        2011-2017: MIT Biological Engineering
+                    </div>
+                </div>
+            </section>
+            <section id="preamble">
+                <section id="jax-logo">
+                    <h2>What is JAX?</h2>
+                    <img src="https://raw.githubusercontent.com/google/jax/master/images/jax_logo_250px.png">
+                </section>
+                <section id="repository">
+                    <a href="https://github.com/google/jax">google/jax</a>
+                </section>
+                <section id="composable-transforms">
+                    <p>A system for composable transforms on NumPy programs.</p>
+                    <br>
+                    <small class="fragment"><em>We will explain that in a moment!</em></small>
+                </section>
+                <section>
+                    <h2>Prerequisites</h2>
+                </section>
+                <section>
+                    <p>Familiar with the NumPy API</p>
+                </section>
+                <section>
+                    <p>Understand what a dot product is</p>
+                </section>
+                <section>
+                    <p>Familiarity with the Jupyter user interface</p>
+                </section>
+                <section>
+                    <p>Ready to be challenged by array computing puzzles</p>
+                </section>
+                <section>
+                    <h2>Important Links</h2>
+                </section>
+                <section>
+                    <a href="https://ericmjl.github.io/dl-workshop">ericmjl.github.io/dl-workshop</a>
+                </section>
+                <section>
+                    <h2>Tutorial format</h2>
+                </section>
+                <section>
+                    <p>Pre-recorded lecture component:</p>
+                    <ul>
+                        <li>saves my throat and</li>
+                        <li>keeps my energy levels high for live Q&A</li>
+                    </ul>
+                </section>
+                <section>
+                    <p>Live Q&A in between videos</p>
+                </section>
+                <section>
+                    <p>Exercises in Jupyter notebooks</p>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <!-- <script src="dist/reveal.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.js" integrity="sha512-Xu/cezKABTI81MGnaBm64vdiS7XkttHeYGOgr2Mdga0bTplSBGongLq2lhK2HwL79wefKM0u4uTCLD0ha1sRzQ==" crossorigin="anonymous"></script>
+    <!-- <script src="plugin/notes/notes.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/notes/notes.min.js" integrity="sha512-FYeeQscKqibmYKr0+nE2+fN5prBsFwgjsBVwkrA88O6mN2+ai6EvRkSi6txuhXlWsyK1MUfoV+94+q6HLouJSQ==" crossorigin="anonymous"></script>
+    <!-- <script src="plugin/markdown/markdown.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/markdown/markdown.min.js" integrity="sha512-eZZqO4ECmVvGhCt+6VZ7ian2bCu4S6yrjSFH9fXLY1zTokpAWsxAxQwM4x6+7G+G4ha5tFIe0jY0XjpBUqS49Q==" crossorigin="anonymous"></script>
+    <!-- <script src="plugin/highlight/highlight.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.min.js" integrity="sha512-NA5UCab7xDKQPXGsmIp8iEuId5BAKGPiqHZsZQcBuySfp1n3dZrwBDKpPNL23Db5upay1nULxU14JV1ggFOD2A==" crossorigin="anonymous"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>
