@@ -53,10 +53,10 @@
                     <br>
                     <small class="fragment"><em>We will explain that in a moment!</em></small>
                 </section>
-                <section>
+                <section id="prerequisites">
                     <h2>Prerequisites</h2>
                 </section>
-                <section>
+                <section id="familiarity">
                     <p>Familiar with the NumPy API</p>
                 </section>
                 <section>
@@ -68,27 +68,107 @@
                 <section>
                     <p>Ready to be challenged by array computing puzzles</p>
                 </section>
-                <section>
+                <section id="important-links">
                     <h2>Important Links</h2>
                 </section>
-                <section>
+                <section id="url-to-repo">
                     <a href="https://ericmjl.github.io/dl-workshop">ericmjl.github.io/dl-workshop</a>
                 </section>
-                <section>
+                <section id="tutorial-format">
                     <h2>Tutorial format</h2>
                 </section>
-                <section>
+                <section id="pre-recorded-lectures">
                     <p>Pre-recorded lecture component:</p>
                     <ul>
-                        <li>saves my throat and</li>
+                        <li>saves my throat</li>
                         <li>keeps my energy levels high for live Q&A</li>
                     </ul>
                 </section>
-                <section>
+                <section id="live-qa">
                     <p>Live Q&A in between videos</p>
                 </section>
-                <section>
+                <section id="exercises">
                     <p>Exercises in Jupyter notebooks</p>
+                </section>
+                <section id="binder-icon">
+                    <p>
+                        <a href="https://mybinder.org/v2/gh/ericmjl/dl-workshop/master">
+                            <img class="blowup" src="https://mybinder.org/badge_logo.svg">
+                        </a>
+                    </p>
+                </section>
+                <section>Let's get started!</section>
+            </section>
+            <section id="loopless-loops">
+                <section>
+                    <h2>Loopless Loops</h2>
+                </section>
+                <section>
+                    <p>Vectorized mapping a.k.a. <code>vmap</code></p>
+                </section>
+                <section id="example-1">
+                    <p>Example #1</p>
+                    <pre><code class="grow">
+import jax.numpy as np
+a = np.arange(20)   # (20,)
+
+def square(x: int) -> int:
+    return x ** 2
+
+from jax import vmap
+mapped_sq = vmap(square)  # this is a function!
+mapped_sq(a)
+# vmap(square)(a) works too!
+                    </code></pre>
+                    <p>Vectorized maps apply a single function along the <em>leading axis</em> (axis 0) of an array.</p>
+                </section>
+                <section>
+                    <p><code>vmap</code> takes in a function and returns another function.</p>
+                    <p class="fragment">The new function automatically applies the original function along the leading axis.</p>
+                </section>
+                <section id="example-2">
+                    <p>Example #2: Row-wise summation</p>
+                    <pre><code class="grow">
+def sum_vector(x: np.ndarray) -> np.ndarray:
+    """Assumes `x` is a vector"""
+    return np.sum(x)
+
+a = np.arange(20).reshape((4, 5))
+vmap(sum_vector)(a)          # shape: (4,)
+vmap(softmax, in_axes=1)(a)  # shape: (5,)
+                    </code></pre>
+                    <p><code>in_axes</code> specifies along which axis the function ought to be applied.</p>
+                </section>
+                <section id="example-3">
+                    <p>Example #3: Softmax</p>
+                    <pre><code class="grow">
+def softmax(x: np.ndarray) -> np.ndarray:
+    """Vector-wise softmax transform."""
+    return np.exp(x) / np.sum(np.exp(x))
+
+a = np.arange(16).reshape((4, 4))
+vmap(softmax)(a)             # row-wise normalization of a
+vmap(softmax, in_axes=1)(a)  # column-wise normalization of a
+                    </code></pre>
+                    <p><code>in_axes</code> specifies along which axis the function ought to be applied.</p>
+                    <small>The softmax operation is used widely in the deep learning world.</small>
+                </section>
+                <section id="exercise">
+                    <h2>Exercise</h2>
+                    <p>Write a function that normalizes each row of a 2D matrix such that each row sums to 1.0</p>
+                    <small>Used in Hidden Markov Model when updating the transition matrix.</small>
+                </section>
+                <section id="example-4">
+                    <p>Example 4: Functions with two arguments</p>
+                    <pre><code class="grow">
+def angle(opposite: float, hypotenous: float) -> float:
+    return np.arcsin(opposite, hypotenous)
+
+opps = np.arange(30)
+hyps = np.arange(30) + 10
+
+vmap(angle)(opps, hyps)
+                    </code></pre>
                 </section>
             </section>
         </div>
