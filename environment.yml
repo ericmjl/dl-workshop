@@ -15,7 +15,7 @@ dependencies:
 - mkdocs>=1.1.2
 - mkdocs-material>=6.2.5
 - mkdocs-material-extensions>=1.0.1
-- nodejs>=15.3.0
+- nodejs
 - numpy>=1.19.5
 - pip
 - pydocstyle>=5.1.1

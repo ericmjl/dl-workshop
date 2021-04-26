@@ -29,3 +29,16 @@
     border: 5px;
     border-color: white;
 }
+
+.restrict-height {
+    max-height: 20%;
+}
+
+.embiggen {
+    width: 30%;
+    /* height: 40%; */
+}
+
+.align-left {
+    text-align: left;
+}
