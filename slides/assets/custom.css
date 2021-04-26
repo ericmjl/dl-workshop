@@ -17,6 +17,14 @@
     transform: scale(1.1);
 }
 
+.blowup {
+    transition: all .2s ease-in-out;
+}
+
+.blowup:hover {
+    transform: scale(3.0);
+}
+
 .gutter {
     border: 5px;
     border-color: white;
