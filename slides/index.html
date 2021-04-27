@@ -250,10 +250,38 @@ def scan(f, init, xs, length=None):
         ys.append(y)
     return carry, np.stack(ys)
                     </code></pre>
-                    <p><code>f</code> accepts two arguments:</p>
+                    <p><code>f</code>, the function that gets scanned, accepts two arguments:</p>
                     <ul>
                         <li class="fragment"><code>carry</code> from previous iteration, and</li>
                         <li class="fragment"><code>x</code>, the loop element in the current iteration</li>
+                    </ul>
+                </section>
+                <section>
+                    <p>Example: Cumulative Sum</p>
+                    <pre><code data-trim class="python grow">
+a = np.array([1, 2, 3, 5, 7, 11, 13, 17])
+
+def cumsum(res, el):
+    """
+    - `res`: The result from the previous loop.
+    - `el`: The current array element.
+    """
+    res = res + el
+    return res, res  # ("carryover", "accumulated")
+
+result_init = 0
+final, result = lax.scan(cumsum, result_init, a)
+result
+# DeviceArray([ 1,  3,  6, 11, 18, 29, 42, 59], dtype=int32)
+
+</code></pre>
+                </section>
+                <section>
+                    <h3>Where does <code>lax.scan</code> get used?</h3>
+                    <ul>
+                        <li>Autoregressive HMMs and timeseries processes</li>
+                        <li>Recurrent neural networks</li>
+                        <li>Gaussian Random Walk</li>
                     </ul>
                 </section>
             </section>
