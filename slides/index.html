@@ -54,6 +54,9 @@
                     <br>
                     <small class="fragment"><em>We will explain that in a moment!</em></small>
                 </section>
+                <section>
+                    <p>A way to supercharge the NumPy API.</p>
+                </section>
                 <section id="prerequisites">
                     <h2>Prerequisites</h2>
                 </section>
@@ -195,6 +198,64 @@ vmap(angle)(opps, adjs)
                 </section>
             </section>
             <section id="loopy-carry">
+                <section id="loopy-carry-header">
+                    <h2>Loopy Carry</h2>
+                </section>
+                <section>
+                    <p><code>vmap</code> works well with functions that operate on each row independently of other rows.</p>
+                </section>
+                <section>
+                    <p>What do we do when we need the output of a current iteration to influence the next?</p>
+                </section>
+                <section>
+                    <p><code>lax.scan</code>!</p>
+                </section>
+                <section>
+                    <p>Underneath the hood, JAX provides the NumPy API <em>implemented on top of XLA</em>.</p>
+                </section>
+                <section>
+                    <p>XLA is the <b>Accelerated Linear Algebra</b> library provided by Google.</p>
+                </section>
+                <section>
+                    <p><code>lax</code> is a Python wrapper to primitive math operations implemented in XLA, plus more.</p>
+                </section>
+                <section>
+                    <p><code>lax.scan</code> implements looping with carry over between loops.</p>
+                </section>
+                <section data-auto-animate>
+                    <p><code>lax.scan</code> has the following semantics <a href="https://jax.readthedocs.io/en/latest/_autosummary/jax.lax.scan.html#jax.lax.scan">documented</a></p>
+                    <pre><code data-trim class="python">
+# Stolen directly from the JAX docs
+def scan(f, init, xs, length=None):
+    if xs is None:
+        xs = [None] * length
+    carry = init
+    ys = []
+    for x in xs:
+        carry, y = f(carry, x)
+        ys.append(y)
+    return carry, np.stack(ys)
+                    </code></pre>
+                </section>
+                <section data-auto-animate>
+                    <pre><code data-trim class="python">
+# Stolen directly from the JAX docs
+def scan(f, init, xs, length=None):
+    if xs is None:
+        xs = [None] * length
+    carry = init
+    ys = []
+    for x in xs:
+        carry, y = f(carry, x)
+        ys.append(y)
+    return carry, np.stack(ys)
+                    </code></pre>
+                    <p><code>f</code> accepts two arguments:</p>
+                    <ul>
+                        <li class="fragment"><code>carry</code> from previous iteration, and</li>
+                        <li class="fragment"><code>x</code>, the loop element in the current iteration</li>
+                    </ul>
+                </section>
             </section>
         </div>
     </div>
@@ -215,4 +276,5 @@ vmap(angle)(opps, adjs)
         });
     </script>
 </body>
+
 </html>
