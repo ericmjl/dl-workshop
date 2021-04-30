@@ -300,6 +300,193 @@ result
                 <section>
                     <p>Drawing random numbers in NumPy.</p>
                 </section>
+                <section data-auto-animate>
+                    <pre><code data-trim class="python">
+#### cell 1
+import numpy as onp  # original numpy
+onp.random.seed(42)
+
+#### cell 2
+a = onp.random.normal()
+# a's value: 0.4967141530112327
+
+#### cell 3
+b = onp.random.normal()
+# b's value: -0.13826430117118466
+</code></pre>
+                    <p>If you re-ran cell 2 by accident, you would get an entirely new random number assigned to <code>a</code>.</p>
+                </section>
+                <section data-auto-animate>
+                    <pre><code data-trim class="python">
+#### cell 1
+import numpy as onp  # original numpy
+onp.random.seed(42)
+
+#### cell 2
+a = onp.random.normal()
+# a's value: 0.4967141530112327
+
+#### cell 3
+b = onp.random.normal()
+# b's value: -0.13826430117118466
+</code></pre>
+                    <p>This is problematic because you may introduce bugs non-deterministically into your code!</p>
+                </section>
+                <section>
+                    <p>JAX's random module enforces <b>deterministic randomness</b> by requiring explicit random number generation keys in each of its random number generators.</p>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+#### cell 1
+from jax import random
+key = random.PRNGKey(42)
+
+#### cell 2
+a = random.normal(key=key)
+# a's value: -0.18471184
+
+#### cell 3
+b = random.normal(key=key)
+# b's value: -0.18471184
+                    </code></pre>
+                    <p>The key determines the random draw.</p>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+#### cell 1
+from jax import random
+key = random.PRNGKey(42)
+
+#### cell 2
+k1, k2 = random.split(key)
+c = random.normal(key=k2)
+# c's value: 1.3694694
+
+#### cell 3
+k3, k4, k5 = random.split(k2, num=3)
+d = random.normal(key=k3)
+# d's value: 0.04692494
+                    </code></pre>
+                    <p>Explicit key splitting is required to generate new draws.</p>
+                </section>
+                <section>
+                    <p>Two ways to generate an array of random draws.</p>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+key = random.PRNGKey(44)
+ks = random.split(key, 20)  # we want to generate 20 draws
+draws = vmap(random.normal)(s)
+# DeviceArray([-0.2531793 , -0.51041234,  0.16341999, -0.03866951,
+#               0.85914546,  0.9833364 , -0.6223309 ,  0.5909158 ,
+#               1.4065154 , -0.25372273, -0.20608927,  1.1317427 ,
+#              -0.92549866,  1.035201  ,  1.940132  ,  0.34215063,
+#               1.6209698 ,  0.49294266,  0.5414663 ,  0.10813037],            dtype=float32)
+</code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+draws = random.normal(key, shape=(20,))
+# DeviceArray([ 0.39843863, -2.626297  , -0.6032239 , -2.081308  ,
+#               0.00854139,  0.7638597 ,  0.7916953 ,  1.0279497 ,
+#               0.58697087, -0.87620246,  1.3288299 ,  1.7267488 ,
+#               0.78643894, -2.752421  ,  1.0341094 , -0.2926419 ,
+#              -0.21061882, -1.1115512 , -0.96723807,  0.12201323],            dtype=float32)
+</code></pre>
+                </section>
+                <section>
+                    <p>Notice how the draws were different - because the keys are different!</p>
+                </section>
+                <section>
+                    <p>Example: Gaussian Random Walk</p>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+num_timesteps = 100
+
+mu = 0.0  # starting mean.
+observations = [mu]
+
+key = random.PRNGKey(44)
+# Split the key num_timesteps number of times
+keys = random.split(key, num_timesteps)
+
+# Gaussian Random Walk goes here
+for k in keys:
+    mu = mu + random.normal(k)
+    observations.append(mu)
+                    </code></pre>
+                </section>
+                <section>
+                    <img class="plain" src="assets/images/gaussian-random-walk.png">
+                </section>
+                <section>
+                    <p>Does that loopy carry look familiar?</p>
+                </section>
+                <section>
+                    <p>JAX-based implementation:</p>
+                    <ol>
+                        <li>We'll instantiate an array of PRNG keys.</li>
+                        <li>We'll then scan a function across the PRNG keys.</li>
+                        <li>We'll finally collect the observations together.</li>
+                    </ol>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+from jax import lax
+
+def new_draw(prev_val, key):
+    new = prev_val + random.normal(key)
+    return new, prev_val
+
+
+final, draws = lax.scan(new_draw, 0.0, keys)
+plt.plot(draws)
+                    </code></pre>
+                </section>
+                <section>
+                    <img class="plain" src="assets/images/gaussian-random-walk.png">
+                </section>
+                <section>
+                    <p>That was one draw from a Gaussian random walk.</p>
+                    <p>What if we wanted multiple draws?</p>
+                </section>
+                <section>
+                    <p>Start by encapsulating one draw inside a function...</p>
+                    <pre><code data-trim class="python grow">
+def grw_draw(key, num_steps):
+    keys = random.split(key, num_steps)
+    final, draws = lax.scan(new_draw, 0.0, keys)
+    return final, draws
+                    </code></pre>
+                </section>
+                <section>
+                    <p>Then vmap the function across PRNG keys!</p>
+                    <pre><code data-trim class="python grow">
+from functools import partial
+
+from jax import vmap
+
+num_realizations = 20
+keys = random.split(key, num_realizations)
+
+## PAY ATTENTION HERE!
+grw_1000_steps = partial(grw_draw, num_steps=1000)
+final, trajectories = vmap(grw_1000_steps)(keys)
+                    </code></pre>
+                </section>
+                <section id="exercises">
+                    <h2>Exercises!</h2>
+                    <p>We have gone through the content of the notebook called <b>deterministic randomness</b>. It's time now to attempt the exercises in there!</p>
+                    <small>Time budget: 20 minutes.</small>
+                    <br>
+                    <small>Ask questions in the chat, and I will respond there.</small>
+                    <br>
+                    <small>Up-vote questions you'd like to hear answered live.</small>
+                </section>
+            </section>
+            <section>
+                <h2></h2>
             </section>
         </div>
     </div>
@@ -320,5 +507,7 @@ result
         });
     </script>
 </body>
+
+</html>
 
 </html>
