@@ -486,7 +486,122 @@ final, trajectories = vmap(grw_1000_steps)(keys)
                 </section>
             </section>
             <section>
-                <h2></h2>
+                <section>
+                    <h2>Optimized Learning</h2>
+                </section>
+                <section>
+                    <p>Let's talk about <code>grad</code>.</p>
+                </section>
+                <section>
+                    <code>grad</code> is a function that transforms a function into its derivative function.
+                </section>
+                <section data-auto-animate>
+                    <p>Example</p>
+                    <pre><code data-trim class="python">
+from jax import grad
+
+def func(x):
+    return 3 * x + 1
+
+df = grad(func)
+
+# Pass in any float value of x.
+df(4.0)
+# output: 3.0
+                    </code></pre>
+                </section>
+                <section data-auto-animate>
+                    <p>Example</p>
+                    <pre><code data-trim class="python">
+def polynomial(x):
+    return 3 * x ** 2 + 4 * x - 3
+
+dpolynomial = grad(polynomial)
+
+# pass in any float value of x
+# the result will be evaluated at 6x + 4,
+# which is the gradient of the polynomial function.
+dpolynomial(3.0)
+# output: 22.0
+</code></pre>
+                </section>
+                <section>
+                    <p>We can take advantage of the gradient function to do gradient-based minimization.</p>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+x = 3.0
+for i in range(200):
+    x -= dpolynomial(x) * 0.01
+x
+# output: -0.66665125
+                    </code></pre>
+                </section>
+                <section>
+                    <p>Using the same ideas, we can do maximum likelihood estimation of probability distribution parameters.</p>
+                    <small>Equivalent to minimizing the negative log likelihood.</small>
+                </section>
+                <section>
+                    <p>Generate some data...</p>
+                    <pre><code data-trim class="python grow">
+from jax import random
+import jax.numpy as np
+from functools import partial
+
+key = random.PRNGKey(44)
+real_mu = -3.0
+real_log_sigma = np.log(2.0)  # the real sigma is 2.0
+
+data = (
+    random.normal(key, shape=(1000,)) * np.exp(real_log_sigma)
+    + real_mu
+)
+                    </code></pre>
+                </section>
+                <section>
+                    <p>Define function to minimize (negative log likelihood):</p>
+                    <pre><code data-trim class="python grow">
+from jax.scipy.stats import norm
+
+def negloglike(mu, log_sigma, data):
+    return -np.sum(
+        norm.logpdf(
+            data, loc=mu, scale=np.exp(log_sigma)
+        )
+    )
+                    </code></pre>
+                    <small>We effectively defined our model, a Gaussian, inside the loss.</small>
+                </section>
+                <section>
+                    <p>Get the gradient function, <b>now w.r.t. two arguments and not just one</b>:</p>
+                    <pre><code data-trim class="python grow">
+dnegloglike = grad(negloglike, argnums=(0, 1))
+
+# condition on data
+dnegloglike = partial(dnegloglike, data=data)
+                    </code></pre>
+                </section>
+                <section>
+                    <p>And optimize!</p>
+                    <pre><code data-trim class="python grow">
+# gradient descent
+for i in range(300):
+    dmu, dlog_sigma = dnegloglike(mu, log_sigma)
+    mu -= dmu * 0.0001
+    log_sigma -= dlog_sigma * 0.0001
+mu, np.exp(log_sigma)
+# -3.0087652, 2.0394986 <-- very very close!
+                    </code></pre>
+                </section>
+                <section id="exercises">
+                    <h2>Exercises!</h2>
+                    <p>We have gone through the content of the notebook called <b>optimized learning</b>. It's time now to attempt the exercise in there!</p>
+                    <small>Time budget: 20 minutes.</small>
+                    <br>
+                    <small>Ask questions in the chat, and I will respond there.</small>
+                    <br>
+                    <small>Up-vote questions you'd like to hear answered live.</small>
+                </section>
             </section>
         </div>
     </div>
@@ -507,6 +622,10 @@ final, trajectories = vmap(grw_1000_steps)(keys)
         });
     </script>
 </body>
+
+</html>
+
+</html>
 
 </html>
 
