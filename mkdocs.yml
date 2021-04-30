@@ -1,11 +1,11 @@
 site_name: Differential Progamming Tutorial
 theme:
-  name: 'material'
+  name: "material"
   palette:
-    primary: 'green'
-    accent: 'green'
+    primary: "green"
+    accent: "green"
     icon:
-      logo: 'library_books'
+      logo: "library_books"
   features:
     - tabs
 
@@ -14,31 +14,30 @@ docs_dir: notebooks/
 nav:
   - Home: index.md
   - Preliminaries:
-    - Preface: 00-preliminaries/01-preface.md
-    - Prerequisites: 00-preliminaries/02-prerequisites.md
-    - Setup: 00-preliminaries/03-setup.md
+      - Preface: 00-preliminaries/01-preface.md
+      - Prerequisites: 00-preliminaries/02-prerequisites.md
+      - Setup: 00-preliminaries/03-setup.md
   - Introduction to Differential Programming:
-    - Neural Networks from Scratch: 01-differential-programming/01-neural-nets-from-scratch.ipynb
-    - Gradient Based Optimization: 01-differential-programming/02-gradient-optimization.ipynb
-    - Linear Model: 01-differential-programming/03-linear-model-optimization.ipynb
-    - Logistic Regression: 01-differential-programming/04-logistic-regression.ipynb
-    - Neural Networks: 01-differential-programming/05-neural-networks.ipynb
+      - Neural Networks from Scratch: 01-differential-programming/01-neural-nets-from-scratch.ipynb
+      - Gradient Based Optimization: 01-differential-programming/02-gradient-optimization.ipynb
+      - Linear Model: 01-differential-programming/03-linear-model-optimization.ipynb
+      - Logistic Regression: 01-differential-programming/04-logistic-regression.ipynb
+      - Neural Networks: 01-differential-programming/05-neural-networks.ipynb
   - JAX Programming Idioms:
-    - Introduction: 02-jax-idioms/00-introduction.ipynb
-    - Mapping: 02-jax-idioms/01-loopless-loops.ipynb
-    - Scanning: 02-jax-idioms/02-lax-scan.ipynb
-    - Random Numbers: 02-jax-idioms/03-deterministic-randomness.ipynb
-    - Compositionality: 02-jax-idioms/04-jit.ipynb
+      - Introduction: 02-jax-idioms/00-introduction.ipynb
+      - Loopless Loops: 02-jax-idioms/01-loopless-loops.ipynb
+      - Loopy Carry: 02-jax-idioms/02-loopy-carry.ipynb
+      - Deterministic Randomness: 02-jax-idioms/03-deterministic-randomness.ipynb
+      - Optimized Learning: 02-jax-idioms/04-optimized-learning.ipynb
   - The stax Module:
-    - Linear Models with stax: 03-stax/01-linear.ipynb
-    - Neural Networks with stax: 03-stax/02-neural.ipynb
+      - Linear Models with stax: 03-stax/01-linear.ipynb
+      - Neural Networks with stax: 03-stax/02-neural.ipynb
   - Gaussian Clustering:
-    - Introduction: 04-gaussian-clustering/01-intro-gaussian-clustering.ipynb
-    - Dirichlet Processes: 04-gaussian-clustering/02-dirichlet-processes.ipynb
-    - DP-GMM: 04-gaussian-clustering/03-dirichlet-process-clustering.ipynb
+      - Introduction: 04-gaussian-clustering/01-intro-gaussian-clustering.ipynb
+      - Dirichlet Processes: 04-gaussian-clustering/02-dirichlet-processes.ipynb
+      - DP-GMM: 04-gaussian-clustering/03-dirichlet-process-clustering.ipynb
   - Appendix:
-    - Partials: appendix/02-partials.ipynb
-
+      - Partials: appendix/02-partials.ipynb
 
 plugins:
   - search:
@@ -66,16 +65,16 @@ extra_javascript:
   - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
   - https://unpkg.com/mermaid@7.1.2/dist/mermaid.min.js
 
-repo_name: 'ericmjl/dl-workshop'
-repo_url: 'https://github.com/ericmjl/dl-workshop'
+repo_name: "ericmjl/dl-workshop"
+repo_url: "https://github.com/ericmjl/dl-workshop"
 
 extra:
   social:
-    - icon: 'material/email'
-      link: 'http://www.shortwhale.com/ericmjl'
-    - icon: 'fontawesome/brands/github'
-      link: 'https://github.com/ericmjl'
-    - icon: 'fontawesome/brands/twitter'
-      link: 'https://twitter.com/ericmjl'
-    - icon: 'fontawesome/brands/linkedin'
-      link: 'https://linkedin.com/in/ericmjl'
+    - icon: "material/email"
+      link: "http://www.shortwhale.com/ericmjl"
+    - icon: "fontawesome/brands/github"
+      link: "https://github.com/ericmjl"
+    - icon: "fontawesome/brands/twitter"
+      link: "https://twitter.com/ericmjl"
+    - icon: "fontawesome/brands/linkedin"
+      link: "https://linkedin.com/in/ericmjl"
