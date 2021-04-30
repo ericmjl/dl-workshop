@@ -201,28 +201,28 @@ vmap(angle)(opps, adjs)
                 <section id="loopy-carry-header">
                     <h2>Loopy Carry</h2>
                 </section>
-                <section>
+                <section id="vmap">
                     <p><code>vmap</code> works well with functions that operate on each row independently of other rows.</p>
                 </section>
-                <section>
+                <section id="question">
                     <p>What do we do when we need the output of a current iteration to influence the next?</p>
                 </section>
-                <section>
+                <section id="explainer-0">
                     <p><code>lax.scan</code>!</p>
                 </section>
-                <section>
+                <section id="explainer-1">
                     <p>Underneath the hood, JAX provides the NumPy API <em>implemented on top of XLA</em>.</p>
                 </section>
-                <section>
+                <section id="explainer-2">
                     <p>XLA is the <b>Accelerated Linear Algebra</b> library provided by Google.</p>
                 </section>
-                <section>
+                <section id="explainer-3">
                     <p><code>lax</code> is a Python wrapper to primitive math operations implemented in XLA, plus more.</p>
                 </section>
-                <section>
+                <section id="explainer-4">
                     <p><code>lax.scan</code> implements looping with carry over between loops.</p>
                 </section>
-                <section data-auto-animate>
+                <section data-auto-animate id="semantics-1">
                     <p><code>lax.scan</code> has the following semantics <a href="https://jax.readthedocs.io/en/latest/_autosummary/jax.lax.scan.html#jax.lax.scan">documented</a></p>
                     <pre><code data-trim class="python">
 # Stolen directly from the JAX docs
@@ -237,7 +237,7 @@ def scan(f, init, xs, length=None):
     return carry, np.stack(ys)
                     </code></pre>
                 </section>
-                <section data-auto-animate>
+                <section data-auto-animate id="semantics-2">
                     <pre><code data-trim class="python">
 # Stolen directly from the JAX docs
 def scan(f, init, xs, length=None):
@@ -256,12 +256,12 @@ def scan(f, init, xs, length=None):
                         <li class="fragment"><code>x</code>, the loop element in the current iteration</li>
                     </ul>
                 </section>
-                <section>
+                <section id="example-cumulative-sum">
                     <p>Example: Cumulative Sum</p>
                     <pre><code data-trim class="python grow">
 a = np.array([1, 2, 3, 5, 7, 11, 13, 17])
 
-def cumsum(res, el):
+def cumsum(res, el):  # ("carryover", "current_element")
     """
     - `res`: The result from the previous loop.
     - `el`: The current array element.
@@ -273,16 +273,32 @@ result_init = 0
 final, result = lax.scan(cumsum, result_init, a)
 result
 # DeviceArray([ 1,  3,  6, 11, 18, 29, 42, 59], dtype=int32)
-
 </code></pre>
                 </section>
-                <section>
-                    <h3>Where does <code>lax.scan</code> get used?</h3>
+                <section id="applications">
+                    <h3>Where can <code>lax.scan</code> get used?</h3>
                     <ul>
                         <li>Autoregressive HMMs and timeseries processes</li>
                         <li>Recurrent neural networks</li>
                         <li>Gaussian Random Walk</li>
                     </ul>
+                </section>
+                <section id="exercises">
+                    <h2>Exercises!</h2>
+                    <p>We have gone through the content of the second notebook called <b>loopy carry</b>. It's time now to attempt the exercises in there!</p>
+                    <small>Time budget: 20 minutes.</small>
+                    <br>
+                    <small>Ask questions in the chat, and I will respond there.</small>
+                    <br>
+                    <small>Up-vote questions you'd like to hear answered live.</small>
+                </section>
+            </section>
+            <section id="deterministic-randomness">
+                <section>
+                    <h2>Deterministic Randomness</h2>
+                </section>
+                <section>
+                    <p>Drawing random numbers in NumPy.</p>
                 </section>
             </section>
         </div>
