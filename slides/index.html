@@ -5,49 +5,87 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal.js</title>
+    <title>Magical NumPy with JAX</title>
 
-    <!-- <link rel="stylesheet" href="dist/reset.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" />
-    <!-- <link rel="stylesheet" href="dist/reveal.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css" integrity="sha512-zu0eodDPCBAZf1vnIgwZ6qchMBt1xqgGkS9vBjVmunoH8pU7cc9OQKBiSQCclpvqySupy9Y1pLZc87VB40G4Sw==" crossorigin="anonymous" />
-    <!-- <link rel="stylesheet" href="dist/theme/black.css" id="theme"> -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/white.min.css" integrity="sha512-4D8b66djW61D6twJNMNqyRrS8wCmCDyVQaME8E5CyGj2wRGsQUz6Y7qa2W0rEvYaaju9OHGxVPd173eBAaMAOQ==" crossorigin="anonymous" /> -->
-    <link rel="stylesheet" href="assets/nord.css">
-    <link rel="stylesheet" href="assets/custom.css">
+    <!-- Theme -->
+    <link rel="stylesheet" href="./assets/nord.css">
+
+    <!-- Customizations -->
+    <link rel="stylesheet" href="./assets/custom.css">
+
+    <!-- Timeline -->
+    <link rel="stylesheet" href="./assets/timeline.css">
 
     <!-- Theme used for syntax highlighted code -->
-    <!-- <link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.min.css" integrity="sha512-z8wQkuDRFwCBfoj7KOiu1MECaRVoXx6rZQWL21x0BsVVH7JkqCp1Otf39qve6CrCycOOL5o9vgfII5Smds23rg==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/fonts/source-sans-pro/source-sans-pro.min.css" integrity="sha512-3Xywo2OI5FqQh0A8U4NwmEYP15dM8LQ33MLqNqTwxYfurqQ5Mx+eYfjKO6QAkS0dPUSp6Q/S7e7c+8qZF6s9Lw==" crossorigin="anonymous"
+    />
+
 </head>
 
 <body>
+    <div class="line top"></div>
+    <div class="line bottom"></div>
+    <div class="line left"></div>
+    <div class="line right"></div>
+
     <div class="reveal">
         <div class="slides">
             <section id="title-slide">
-                <h2>Magical NumPy with JAX</h2>
+                <h1>Magical NumPy with JAX</h1>
                 <p>Eric J. Ma</p>
                 <p>PyCon 2021</p>
             </section>
             <section id="about-me">
-                <h2>About Me</h2>
-                <br>
-                <div class="container">
-                    <div class="col grow">
-                        2017-Present: Novartis Institutes for BioMedical Research
+                <section id="about-myself-title">
+                    <h2>A bit about myself</h2>
+                </section>
+                <section data-auto-animate data-background-color="#D8DEE9" id="professional-timeline">
+                    <h3>I enjoy speaking on and teaching technical topics</h3>
+                    <div class="container">
+                        <div class="col">
+                            <p>DS Workflow</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Dx2vG6qmtPs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="col">
+                            <p>Bayesian DL</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/s0S6HFdPtlA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="col">
+                            <p>Testing for DS</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/5RKuHvZERLY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
                     </div>
-                    <div class="col grow">
-                        2011-2017: MIT Biological Engineering
+                </section>
+                <section data-auto-animate data-background-color="#D8DEE9" id="professional-timeline">
+                    <h3>I enjoy speaking on and teaching technical topics</h3>
+                    <div class="container">
+                        <div class="col">
+                            <p>Network Analysis</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/ED4NZ-4EWRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="col">
+                            <p>DL Fundamentals</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/JPBz7-UCqRo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="col">
+                            <p>Bayesian Stats</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/89ye2hfsAsk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
                     </div>
-                </div>
+                </section>
             </section>
             <section id="preamble">
                 <section id="jax-logo">
                     <h2>What is JAX?</h2>
-                    <img class="plain grow" src="https://raw.githubusercontent.com/google/jax/master/images/jax_logo_250px.png">
+                    <img class="grow" src="https://raw.githubusercontent.com/google/jax/master/images/jax_logo_250px.png">
                 </section>
                 <section id="repository">
-                    <a href="https://github.com/google/jax">google/jax</a>
+                    <p class="explode">
+                        <a href="https://github.com/google/jax">google/jax</a>
+                    </p>
                 </section>
                 <section id="composable-transforms">
                     <p>A system for composable transforms on NumPy programs.</p>
@@ -55,21 +93,21 @@
                     <small class="fragment"><em>We will explain that in a moment!</em></small>
                 </section>
                 <section>
-                    <p>A way to supercharge the NumPy API.</p>
+                    <p>A package that supercharges the NumPy API.</p>
                 </section>
                 <section id="prerequisites">
                     <h2>Prerequisites</h2>
                 </section>
                 <section id="familiarity">
                     <p>Familiar with the NumPy API</p>
-                    <img class="plain grow embiggen" src="https://numpy.org/images/logos/numpy.svg">
+                    <img class="plain half-width grow" src="https://numpy.org/images/logos/numpy.svg">
                 </section>
                 <section>
                     <p>Understand what a dot product is</p>
                 </section>
                 <section>
                     <p>Familiarity with the Jupyter user interface</p>
-                    <img class="plain grow embiggen" src="https://jupyter.org/assets/main-logo.svg">
+                    <img class="plain half-width grow" src="https://jupyter.org/assets/main-logo.svg">
                 </section>
                 <section>
                     <p>Ready to be challenged by array computing puzzles</p>
@@ -78,7 +116,9 @@
                     <h2>Important Links</h2>
                 </section>
                 <section id="url-to-repo">
-                    <a href="https://ericmjl.github.io/dl-workshop">ericmjl.github.io/dl-workshop</a>
+                    <p class="explode">
+                        <a href="https://ericmjl.github.io/dl-workshop">ericmjl.github.io/dl-workshop</a>
+                    </p>
                 </section>
                 <section id="tutorial-format">
                     <h2>Tutorial format</h2>
@@ -95,9 +135,9 @@
                 </section>
                 <section id="exercises">
                     <p>Exercises in Jupyter notebooks</p>
-                    <p>
+                    <p class="explode">
                         <a href="https://mybinder.org/v2/gh/ericmjl/dl-workshop/master">
-                            <img class="plain blowup" src="https://mybinder.org/badge_logo.svg">
+                            <img src="https://mybinder.org/badge_logo.svg">
                         </a>
                     </p>
                 </section>
@@ -151,7 +191,7 @@ mapped_sq(a)
                     <p>Example</p>
                     <pre><code data-trim class="python grow">
 def sum_vector(x: np.ndarray) -> np.ndarray:
-    """Assumes `x` is a vector"""
+   """Assumes `x` is a vector"""
     return np.sum(x)
 
 a = np.arange(20).reshape((4, 5))
@@ -164,7 +204,7 @@ vmap(sum_vector, in_axes=1)(a)  # shape: (5,)
                     <p>Example</p>
                     <pre><code data-trim class="python grow">
 def softmax(x: np.ndarray) -> np.ndarray:
-    """Vector-wise softmax transform."""
+   """Vector-wise softmax transform."""
     return np.exp(x) / np.sum(np.exp(x))
 
 a = np.arange(16).reshape((4, 4))
@@ -189,7 +229,7 @@ vmap(angle)(opps, adjs)
                 </section>
                 <section>
                     <h2>Exercises!</h2>
-                    <p>We have gone through the content of the first notebook called "loopless loops". It's time now to attempt the exercises in there!</p>
+                    <p>We have gone through the content of the first notebook called"loopless loops". It's time now to attempt the exercises in there!</p>
                     <small>Time budget: 20 minutes.</small>
                     <br>
                     <small>Ask questions in the chat, and I will respond there.</small>
@@ -261,13 +301,13 @@ def scan(f, init, xs, length=None):
                     <pre><code data-trim class="python grow">
 a = np.array([1, 2, 3, 5, 7, 11, 13, 17])
 
-def cumsum(res, el):  # ("carryover", "current_element")
+def cumsum(res, el):  # ("carryover","current_element")
     """
     - `res`: The result from the previous loop.
     - `el`: The current array element.
     """
     res = res + el
-    return res, res  # ("carryover", "accumulated")
+    return res, res  # ("carryover","accumulated")
 
 result_init = 0
 final, result = lax.scan(cumsum, result_init, a)
@@ -616,16 +656,12 @@ mu, np.exp(log_sigma)
         // - https://revealjs.com/config/
         Reveal.initialize({
             hash: true,
-
+            margin: 0.2,
             // Learn about plugins: https://revealjs.com/plugins/
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
         });
     </script>
 </body>
-
-</html>
-
-</html>
 
 </html>
 
