@@ -3,8 +3,6 @@ name: Build website
 on:
   push:
     branches: [master]
-  pull_request:
-    branches: [master]
 
 jobs:
   build-website:
@@ -39,24 +37,26 @@ jobs:
 
       # Build cache of website
       - name: Cache HTML outputs
-        id: cache-environment
+        id: cache-website
         uses: actions/cache@v2
         with:
           path: |
             site
-          key: os.${{ runner.os }}-env.${{ hashFiles('environment.yml') }}-env.${{ hashFiles(src) }}-env.${{ hashFiles(notebooks) }}
+          key: os.${{ runner.os }}-env.${{ hashFiles('environment.yml') }}-env.${{ hashFiles('src') }}-env.${{ hashFiles('notebooks') }}
 
       - name: Build website
+        if: steps.cache-website.outputs.cache-hit != 'true'
         run: mkdocs build
-      # - name: Deploy Website
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     # https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-set-personal-access-token-personal_token
-      #     personal_token: ${{ secrets.GHPAGES_TOKEN }}
-      #     publish_dir: ./site
-      #     publish_branch: gh-pages
-      #     allow_empty_commit: false
-      #     keep_files: false
-      #     force_orphan: true
-      #     enable_jekyll: false
-      #     disable_nojekyll: false
+
+      - name: Deploy Website
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          # https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-set-personal-access-token-personal_token
+          personal_token: ${{ secrets.GHPAGES_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
+          allow_empty_commit: false
+          keep_files: false
+          force_orphan: true
+          enable_jekyll: false
+          disable_nojekyll: false
