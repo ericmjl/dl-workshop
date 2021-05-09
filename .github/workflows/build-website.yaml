@@ -46,7 +46,9 @@ jobs:
 
       - name: Build website
         if: steps.cache-website.outputs.cache-hit != 'true'
-        run: mkdocs build
+        run: |
+          conda activate dl-workshop
+          mkdocs build
 
       - name: Deploy Website
         uses: peaceiris/actions-gh-pages@v3
