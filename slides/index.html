@@ -1,0 +1,673 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Magical NumPy with JAX</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reset.min.css" integrity="sha512-Mjxkx+r7O/OLQeKeIBCQ2yspG1P5muhAtv/J+p2/aPnSenciZWm5Wlnt+NOUNA4SHbnBIE/R2ic0ZBiCXdQNUg==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.css" integrity="sha512-zu0eodDPCBAZf1vnIgwZ6qchMBt1xqgGkS9vBjVmunoH8pU7cc9OQKBiSQCclpvqySupy9Y1pLZc87VB40G4Sw==" crossorigin="anonymous" />
+    <!-- Theme -->
+    <link rel="stylesheet" href="./assets/nord.css">
+
+    <!-- Customizations -->
+    <link rel="stylesheet" href="./assets/custom.css">
+
+    <!-- Timeline -->
+    <link rel="stylesheet" href="./assets/timeline.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/monokai.min.css" integrity="sha512-z8wQkuDRFwCBfoj7KOiu1MECaRVoXx6rZQWL21x0BsVVH7JkqCp1Otf39qve6CrCycOOL5o9vgfII5Smds23rg==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/theme/fonts/source-sans-pro/source-sans-pro.min.css" integrity="sha512-3Xywo2OI5FqQh0A8U4NwmEYP15dM8LQ33MLqNqTwxYfurqQ5Mx+eYfjKO6QAkS0dPUSp6Q/S7e7c+8qZF6s9Lw==" crossorigin="anonymous"
+    />
+
+</head>
+
+<body>
+    <div class="line top"></div>
+    <div class="line bottom"></div>
+    <div class="line left"></div>
+    <div class="line right"></div>
+
+    <div class="reveal">
+        <div class="slides">
+            <section id="title-slide">
+                <h1>Magical NumPy with JAX</h1>
+                <p>Eric J. Ma</p>
+                <p>PyCon 2021</p>
+            </section>
+            <section id="about-me">
+                <section id="about-myself-title">
+                    <h2>A bit about myself</h2>
+                </section>
+                <section data-auto-animate data-background-color="#D8DEE9" id="professional-timeline">
+                    <h3>I enjoy speaking on and teaching technical topics</h3>
+                    <div class="container">
+                        <div class="col">
+                            <p>DS Workflow</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/Dx2vG6qmtPs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="col">
+                            <p>Bayesian DL</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/s0S6HFdPtlA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="col">
+                            <p>Testing for DS</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/5RKuHvZERLY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </section>
+                <section data-auto-animate data-background-color="#D8DEE9" id="professional-timeline">
+                    <h3>I enjoy speaking on and teaching technical topics</h3>
+                    <div class="container">
+                        <div class="col">
+                            <p>Network Analysis</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/ED4NZ-4EWRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="col">
+                            <p>DL Fundamentals</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/JPBz7-UCqRo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="col">
+                            <p>Bayesian Stats</p>
+                            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/89ye2hfsAsk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </section>
+            </section>
+            <section id="preamble">
+                <section id="jax-logo" data-auto-animate>
+                    <h2>What is JAX?</h2>
+                    <img class="grow" src="https://raw.githubusercontent.com/google/jax/master/images/jax_logo_250px.png">
+                </section>
+                <section id="repository">
+                    <p class="explode">
+                        <a href="https://github.com/google/jax">google/jax</a>
+                    </p>
+                </section>
+                <section id="composable-transforms">
+                    <p>A system for composable transforms on NumPy programs.</p>
+                    <br>
+                    <small class="fragment"><em>We will explain that in a moment!</em></small>
+                </section>
+                <section>
+                    <p>A package that supercharges the NumPy API.</p>
+                    <ol>
+                        <li>Looping without loops</li>
+                        <li>Taking derivatives of functions</li>
+                        <li>Just-in-time compilation</li>
+                    </ol>
+                    <p>Overall effect is writing code that might be easier to reason about.</p>
+                </section>
+                <section id="prerequisites">
+                    <h2>Prerequisites</h2>
+                </section>
+                <section id="familiarity">
+                    <p>Familiar with the NumPy API</p>
+                    <img class="plain half-width grow" src="https://numpy.org/images/logos/numpy.svg">
+                </section>
+                <section>
+                    <p>Understand what a dot product is.</p>
+                    <small>There are examples and exercises that involve the dot product.</small>
+                </section>
+                <section>
+                    <p>Ready to be challenged by array computing puzzles.</p>
+                    <small>Exercises that are designed to help you gain mastery over these ideas.</small>
+                </section>
+                <section>
+                    <p>Familiarity with the Jupyter user interface</p>
+                    <img class="plain half-width grow" src="https://jupyter.org/assets/main-logo.svg">
+                </section>
+                <section id="url-to-repo">
+                    <p class="explode">
+                        <a href="https://ericmjl.github.io/dl-workshop">ericmjl.github.io/dl-workshop</a>
+                    </p>
+                </section>
+                <section id="tutorial-format">
+                    <h2>Tutorial format</h2>
+                </section>
+                <section id="pre-recorded-lectures">
+                    <p>Pre-recorded lecture component:</p>
+                    <ul>
+                        <li>saves my throat</li>
+                        <li>keeps my energy levels high for live Q&A</li>
+                    </ul>
+                </section>
+                <section id="live-qa">
+                    <p>Exercises and live Q&A in between videos</p>
+                </section>
+                <section id="exercises">
+                    <p>Exercises in Jupyter notebooks</p>
+                    <p class="explode">
+                        <a href="https://mybinder.org/v2/gh/ericmjl/dl-workshop/master">
+                            <img src="https://mybinder.org/badge_logo.svg">
+                        </a>
+                    </p>
+                </section>
+                <section>Let's get started!</section>
+            </section>
+            <section id="loopless-loops">
+                <section>
+                    <h2>Loopless Loops</h2>
+                </section>
+                <section>
+                    <p>Vectorized mapping a.k.a. <code>vmap</code></p>
+                </section>
+                <section>
+                    <p>The semantics of <code>vmap</code> look roughly like this:</p>
+                    <pre><code data-trim class="python grow">
+def func(x):
+    ...
+    return result
+
+
+def vmapped_func(array):
+    result = []
+    for element in array:
+        result.append(func(x))
+    result = np.stack(result)
+    return result
+                    </code></pre>
+                </section>
+
+                <section id="example-vmap-square">
+                    <p>Example</p>
+                    <pre><code data-trim class="python grow">
+import jax.numpy as np
+a = np.arange(20)   # (20,)
+
+def square(x: int) -> int:
+    return x ** 2
+
+from jax import vmap
+mapped_sq = vmap(square)  # this is a function!
+mapped_sq(a)
+# vmap(square)(a) works too!
+                    </code></pre>
+                    <p>Vectorized maps apply a single function along the <em>leading axis</em> (axis 0) of an array.</p>
+                </section>
+                <section>
+                    <p><code>vmap</code> takes in a function and returns another function.</p>
+                    <p class="fragment">The new function automatically applies the original function along the leading axis.</p>
+                </section>
+                <section id="example-vmap-row-summation">
+                    <p>Example</p>
+                    <pre><code data-trim class="python grow">
+def sum_vector(x: np.ndarray) -> np.ndarray:
+   """Assumes `x` is a vector"""
+    return np.sum(x)
+
+a = np.arange(20).reshape((4, 5))
+vmap(sum_vector)(a)          # shape: (4,)
+vmap(sum_vector, in_axes=1)(a)  # shape: (5,)
+                    </code></pre>
+                    <p><code>in_axes</code> specifies along which axis the function ought to be applied.</p>
+                </section>
+                <section id="example-vmap-softmax">
+                    <p>Example</p>
+                    <pre><code data-trim class="python grow">
+def softmax(x: np.ndarray) -> np.ndarray:
+   """Vector-wise softmax transform."""
+    return np.exp(x) / np.sum(np.exp(x))
+
+a = np.arange(16).reshape((4, 4))
+vmap(softmax)(a)             # row-wise normalization of a
+vmap(softmax, in_axes=1)(a)  # column-wise normalization of a
+                    </code></pre>
+                    <p><code>in_axes</code> specifies along which axis the function ought to be applied.</p>
+                    <small>The softmax operation is used widely in the deep learning world.</small>
+                </section>
+                <section id="example-4">
+                    <p>Example: Functions with two arguments</p>
+                    <pre><code data-trim class="python grow">
+def angle(opp: float, adj: float):
+    return np.arctan(opp / adj)
+
+opps = np.arange(20)
+adjs = np.linspace(3, 30, 20)
+
+vmap(angle)(opps, adjs)
+                    </code></pre>
+                    <p>The function is now vmapped across the leading axis of <em>both</em> arguments.</p>
+                </section>
+                <section>
+                    <h2>Exercises!</h2>
+                    <p>We have gone through the content of the first notebook called"loopless loops". It's time now to attempt the exercises in there!</p>
+                    <small>Time budget: 20 minutes.</small>
+                    <br>
+                    <small>Ask questions in the chat, and I will respond there.</small>
+                    <br>
+                    <small>Up-vote questions you'd like to hear answered live.</small>
+                </section>
+            </section>
+            <section id="loopy-carry">
+                <section id="loopy-carry-header">
+                    <h2>Loopy Carry</h2>
+                </section>
+                <section id="vmap">
+                    <p><code>vmap</code> works well with functions that operate on each row independently of other rows.</p>
+                </section>
+                <section id="question">
+                    <p>What do we do when we need the output of a current iteration to influence the next?</p>
+                </section>
+                <section id="explainer-0">
+                    <p><code>lax.scan</code>!</p>
+                </section>
+                <section id="explainer-1">
+                    <p>Underneath the hood, JAX provides the NumPy API <em>implemented on top of XLA</em>.</p>
+                </section>
+                <section id="explainer-2">
+                    <p>XLA is the <b>Accelerated Linear Algebra</b> library provided by Google.</p>
+                </section>
+                <section id="explainer-3">
+                    <p><code>lax</code> is a Python wrapper to primitive math operations implemented in XLA, plus more.</p>
+                </section>
+                <section id="explainer-4">
+                    <p><code>lax.scan</code> implements looping with carry over between loops.</p>
+                </section>
+                <section data-auto-animate id="semantics-1">
+                    <p><code>lax.scan</code> has the following semantics <a href="https://jax.readthedocs.io/en/latest/_autosummary/jax.lax.scan.html#jax.lax.scan">documented</a></p>
+                    <pre><code data-trim class="python">
+# Stolen directly from the JAX docs
+def scan(f, init, xs, length=None):
+    if xs is None:
+        xs = [None] * length
+    carry = init
+    ys = []
+    for x in xs:
+        carry, y = f(carry, x)
+        ys.append(y)
+    return carry, np.stack(ys)
+                    </code></pre>
+                </section>
+                <section data-auto-animate id="semantics-2">
+                    <pre><code data-trim class="python">
+# Stolen directly from the JAX docs
+def scan(f, init, xs, length=None):
+    if xs is None:
+        xs = [None] * length
+    carry = init
+    ys = []
+    for x in xs:
+        carry, y = f(carry, x)
+        ys.append(y)
+    return carry, np.stack(ys)
+                    </code></pre>
+                    <p><code>f</code>, the function that gets scanned, accepts two arguments:</p>
+                    <ul>
+                        <li class="fragment"><code>carry</code> from previous iteration, and</li>
+                        <li class="fragment"><code>x</code>, the loop element in the current iteration</li>
+                    </ul>
+                </section>
+                <section id="example-cumulative-sum">
+                    <p>Example: Cumulative Sum</p>
+                    <pre><code data-trim class="python grow">
+a = np.array([1, 2, 3, 5, 7, 11, 13, 17])
+
+def cumsum(res, el):  # ("carryover","current_element")
+    """
+    - `res`: The result from the previous loop.
+    - `el`: The current array element.
+    """
+    res = res + el
+    return res, res  # ("carryover","accumulated")
+
+result_init = 0
+final, result = lax.scan(cumsum, result_init, a)
+result
+# DeviceArray([ 1,  3,  6, 11, 18, 29, 42, 59], dtype=int32)
+</code></pre>
+                </section>
+                <section id="applications">
+                    <h3>Where can <code>lax.scan</code> get used?</h3>
+                    <ul>
+                        <li>Autoregressive HMMs and timeseries processes</li>
+                        <li>Recurrent neural networks</li>
+                        <li>Gaussian Random Walk</li>
+                    </ul>
+                </section>
+                <section id="exercises">
+                    <h2>Exercises!</h2>
+                    <p>We have gone through the content of the second notebook called <b>loopy carry</b>. It's time now to attempt the exercises in there!</p>
+                    <small>Time budget: 20 minutes.</small>
+                    <br>
+                    <small>Ask questions in the chat, and I will respond there.</small>
+                    <br>
+                    <small>Up-vote questions you'd like to hear answered live.</small>
+                </section>
+            </section>
+            <section id="deterministic-randomness">
+                <section>
+                    <h2>Deterministic Randomness</h2>
+                </section>
+                <section>
+                    <p>Drawing random numbers in NumPy.</p>
+                </section>
+                <section data-auto-animate>
+                    <pre><code data-trim class="python">
+#### cell 1
+import numpy as onp  # original numpy
+onp.random.seed(42)
+
+#### cell 2
+a = onp.random.normal()
+# a's value: 0.4967141530112327
+
+#### cell 3
+b = onp.random.normal()
+# b's value: -0.13826430117118466
+</code></pre>
+                    <p>If you re-ran cell 2 by accident, you would get an entirely new random number assigned to <code>a</code>.</p>
+                </section>
+                <section data-auto-animate>
+                    <pre><code data-trim class="python">
+#### cell 1
+import numpy as onp  # original numpy
+onp.random.seed(42)
+
+#### cell 2
+a = onp.random.normal()
+# a's value: 0.4967141530112327
+
+#### cell 3
+b = onp.random.normal()
+# b's value: -0.13826430117118466
+</code></pre>
+                    <p>This is problematic because you may introduce bugs non-deterministically into your code!</p>
+                </section>
+                <section>
+                    <p>JAX's random module enforces <b>deterministic randomness</b> by requiring explicit random number generation keys in each of its random number generators.</p>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+#### cell 1
+from jax import random
+key = random.PRNGKey(42)
+
+#### cell 2
+a = random.normal(key=key)
+# a's value: -0.18471184
+
+#### cell 3
+b = random.normal(key=key)
+# b's value: -0.18471184
+                    </code></pre>
+                    <p>The key determines the random draw.</p>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+#### cell 1
+from jax import random
+key = random.PRNGKey(42)
+
+#### cell 2
+k1, k2 = random.split(key)
+c = random.normal(key=k2)
+# c's value: 1.3694694
+
+#### cell 3
+k3, k4, k5 = random.split(k2, num=3)
+d = random.normal(key=k3)
+# d's value: 0.04692494
+                    </code></pre>
+                    <p>Explicit key splitting is required to generate new draws.</p>
+                </section>
+                <section>
+                    <p>Two ways to generate an array of random draws.</p>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+key = random.PRNGKey(44)
+ks = random.split(key, 20)  # we want to generate 20 draws
+draws = vmap(random.normal)(s)
+# DeviceArray([-0.2531793 , -0.51041234,  0.16341999, -0.03866951,
+#               0.85914546,  0.9833364 , -0.6223309 ,  0.5909158 ,
+#               1.4065154 , -0.25372273, -0.20608927,  1.1317427 ,
+#              -0.92549866,  1.035201  ,  1.940132  ,  0.34215063,
+#               1.6209698 ,  0.49294266,  0.5414663 ,  0.10813037],            dtype=float32)
+</code></pre>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+draws = random.normal(key, shape=(20,))
+# DeviceArray([ 0.39843863, -2.626297  , -0.6032239 , -2.081308  ,
+#               0.00854139,  0.7638597 ,  0.7916953 ,  1.0279497 ,
+#               0.58697087, -0.87620246,  1.3288299 ,  1.7267488 ,
+#               0.78643894, -2.752421  ,  1.0341094 , -0.2926419 ,
+#              -0.21061882, -1.1115512 , -0.96723807,  0.12201323],            dtype=float32)
+</code></pre>
+                </section>
+                <section>
+                    <p>Notice how the draws were different - because the keys are different!</p>
+                </section>
+                <section>
+                    <p>Example: Gaussian Random Walk</p>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+num_timesteps = 100
+
+mu = 0.0  # starting mean.
+observations = [mu]
+
+key = random.PRNGKey(44)
+# Split the key num_timesteps number of times
+keys = random.split(key, num_timesteps)
+
+# Gaussian Random Walk goes here
+for k in keys:
+    mu = mu + random.normal(k)
+    observations.append(mu)
+                    </code></pre>
+                </section>
+                <section>
+                    <img class="plain" src="assets/images/gaussian-random-walk.png">
+                </section>
+                <section>
+                    <p>Does that loopy carry look familiar?</p>
+                </section>
+                <section>
+                    <p>JAX-based implementation:</p>
+                    <ol>
+                        <li>We'll instantiate an array of PRNG keys.</li>
+                        <li>We'll then scan a function across the PRNG keys.</li>
+                        <li>We'll finally collect the observations together.</li>
+                    </ol>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+from jax import lax
+
+def new_draw(prev_val, key):
+    new = prev_val + random.normal(key)
+    return new, prev_val
+
+
+final, draws = lax.scan(new_draw, 0.0, keys)
+plt.plot(draws)
+                    </code></pre>
+                </section>
+                <section>
+                    <img class="plain" src="assets/images/gaussian-random-walk.png">
+                </section>
+                <section>
+                    <p>That was one draw from a Gaussian random walk.</p>
+                    <p>What if we wanted multiple draws?</p>
+                </section>
+                <section>
+                    <p>Start by encapsulating one draw inside a function...</p>
+                    <pre><code data-trim class="python grow">
+def grw_draw(key, num_steps):
+    keys = random.split(key, num_steps)
+    final, draws = lax.scan(new_draw, 0.0, keys)
+    return final, draws
+                    </code></pre>
+                </section>
+                <section>
+                    <p>Then vmap the function across PRNG keys!</p>
+                    <pre><code data-trim class="python grow">
+from functools import partial
+
+from jax import vmap
+
+num_realizations = 20
+keys = random.split(key, num_realizations)
+
+## PAY ATTENTION HERE!
+grw_1000_steps = partial(grw_draw, num_steps=1000)
+final, trajectories = vmap(grw_1000_steps)(keys)
+                    </code></pre>
+                </section>
+                <section id="exercises">
+                    <h2>Exercises!</h2>
+                    <p>We have gone through the content of the notebook called <b>deterministic randomness</b>. It's time now to attempt the exercises in there!</p>
+                    <small>Time budget: 20 minutes.</small>
+                    <br>
+                    <small>Ask questions in the chat, and I will respond there.</small>
+                    <br>
+                    <small>Up-vote questions you'd like to hear answered live.</small>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h2>Optimized Learning</h2>
+                </section>
+                <section>
+                    <p>Let's talk about <code>grad</code>.</p>
+                </section>
+                <section>
+                    <code>grad</code> is a function that transforms a function into its derivative function.
+                </section>
+                <section data-auto-animate>
+                    <p>Example</p>
+                    <pre><code data-trim class="python">
+from jax import grad
+
+def func(x):
+    return 3 * x + 1
+
+df = grad(func)
+
+# Pass in any float value of x.
+df(4.0)
+# output: 3.0
+                    </code></pre>
+                </section>
+                <section data-auto-animate>
+                    <p>Example</p>
+                    <pre><code data-trim class="python">
+def polynomial(x):
+    return 3 * x ** 2 + 4 * x - 3
+
+dpolynomial = grad(polynomial)
+
+# pass in any float value of x
+# the result will be evaluated at 6x + 4,
+# which is the gradient of the polynomial function.
+dpolynomial(3.0)
+# output: 22.0
+</code></pre>
+                </section>
+                <section>
+                    <p>We can take advantage of the gradient function to do gradient-based minimization.</p>
+                </section>
+                <section>
+                    <pre><code data-trim class="python grow">
+x = 3.0
+for i in range(200):
+    x -= dpolynomial(x) * 0.01
+x
+# output: -0.66665125
+                    </code></pre>
+                </section>
+                <section>
+                    <p>Using the same ideas, we can do maximum likelihood estimation of probability distribution parameters.</p>
+                    <small>Equivalent to minimizing the negative log likelihood.</small>
+                </section>
+                <section>
+                    <p>Generate some data...</p>
+                    <pre><code data-trim class="python grow">
+from jax import random
+import jax.numpy as np
+from functools import partial
+
+key = random.PRNGKey(44)
+real_mu = -3.0
+real_log_sigma = np.log(2.0)  # the real sigma is 2.0
+
+data = (
+    random.normal(key, shape=(1000,)) * np.exp(real_log_sigma)
+    + real_mu
+)
+                    </code></pre>
+                </section>
+                <section>
+                    <p>Define function to minimize (negative log likelihood):</p>
+                    <pre><code data-trim class="python grow">
+from jax.scipy.stats import norm
+
+def negloglike(mu, log_sigma, data):
+    return -np.sum(
+        norm.logpdf(
+            data, loc=mu, scale=np.exp(log_sigma)
+        )
+    )
+                    </code></pre>
+                    <small>We effectively defined our model, a Gaussian, inside the loss.</small>
+                </section>
+                <section>
+                    <p>Get the gradient function, <b>now w.r.t. two arguments and not just one</b>:</p>
+                    <pre><code data-trim class="python grow">
+dnegloglike = grad(negloglike, argnums=(0, 1))
+
+# condition on data
+dnegloglike = partial(dnegloglike, data=data)
+                    </code></pre>
+                </section>
+                <section>
+                    <p>And optimize!</p>
+                    <pre><code data-trim class="python grow">
+# gradient descent
+for i in range(300):
+    dmu, dlog_sigma = dnegloglike(mu, log_sigma)
+    mu -= dmu * 0.0001
+    log_sigma -= dlog_sigma * 0.0001
+mu, np.exp(log_sigma)
+# -3.0087652, 2.0394986 <-- very very close!
+                    </code></pre>
+                </section>
+                <section id="exercises">
+                    <h2>Exercises!</h2>
+                    <p>We have gone through the content of the notebook called <b>optimized learning</b>. It's time now to attempt the exercise in there!</p>
+                    <small>Time budget: 20 minutes.</small>
+                    <br>
+                    <small>Ask questions in the chat, and I will respond there.</small>
+                    <br>
+                    <small>Up-vote questions you'd like to hear answered live.</small>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/reveal.min.js" integrity="sha512-Xu/cezKABTI81MGnaBm64vdiS7XkttHeYGOgr2Mdga0bTplSBGongLq2lhK2HwL79wefKM0u4uTCLD0ha1sRzQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/notes/notes.min.js" integrity="sha512-FYeeQscKqibmYKr0+nE2+fN5prBsFwgjsBVwkrA88O6mN2+ai6EvRkSi6txuhXlWsyK1MUfoV+94+q6HLouJSQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/markdown/markdown.min.js" integrity="sha512-eZZqO4ECmVvGhCt+6VZ7ian2bCu4S6yrjSFH9fXLY1zTokpAWsxAxQwM4x6+7G+G4ha5tFIe0jY0XjpBUqS49Q==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.0/plugin/highlight/highlight.min.js" integrity="sha512-NA5UCab7xDKQPXGsmIp8iEuId5BAKGPiqHZsZQcBuySfp1n3dZrwBDKpPNL23Db5upay1nULxU14JV1ggFOD2A==" crossorigin="anonymous"></script>
+    <script>
+        // More info about initialization & config:
+        // - https://revealjs.com/initialization/
+        // - https://revealjs.com/config/
+        Reveal.initialize({
+            hash: true,
+            margin: 0.2,
+            // Learn about plugins: https://revealjs.com/plugins/
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+        });
+    </script>
+</body>
+
+</html>
+
+</html>

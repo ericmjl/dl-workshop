@@ -2,8 +2,9 @@ name: Build website
 
 on:
   push:
-    branches:
-      master
+    branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
   build-website:
@@ -47,7 +48,6 @@ jobs:
 
       - name: Build website
         run: mkdocs build
-
       # - name: Deploy Website
       #   uses: peaceiris/actions-gh-pages@v3
       #   with:
