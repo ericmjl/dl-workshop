@@ -48,6 +48,7 @@ jobs:
         if: steps.cache-website.outputs.cache-hit != 'true'
         run: |
           source activate dl-workshop
+          python -m ipykernel install --user --name dl-workshop
           mkdocs build
 
       - name: Deploy Website
