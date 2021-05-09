@@ -47,7 +47,7 @@ jobs:
       - name: Build website
         if: steps.cache-website.outputs.cache-hit != 'true'
         run: |
-          conda activate dl-workshop
+          source activate dl-workshop
           mkdocs build
 
       - name: Deploy Website
