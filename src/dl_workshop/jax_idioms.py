@@ -1,6 +1,7 @@
 from jax import lax
 from jax import numpy as np
 from jax import random, vmap
+from typing import Callable
 
 
 def loopless_loops_ex1(mat1, mat2):
@@ -76,3 +77,11 @@ def randomness_ex_2(key, num_breaks, concentration: float):
     keys = random.split(key, num_breaks)
     final, sticks = lax.scan(step_one_conc, init=1.0, xs=keys)
     return final, sticks
+
+
+def randomness_ex_3(key, num_realizations: int, grw_draw: Callable):
+    keys = random.split(key, num_realizations)
+    grw_1000_steps = partial(grw_draw, num_steps=1000)
+
+    final, trajectories = vmap(grw_1000_steps)(keys)
+    return final, trajectories

@@ -156,14 +156,18 @@
                     <p>Vectorized mapping a.k.a. <code>vmap</code></p>
                 </section>
                 <section>
+                    <p class="explode"><img src="https://i.imgflip.com/58w3m1.jpg"></p>
+                </section>
+                <section>
                     <p>The semantics of <code>vmap</code> look roughly like this:</p>
                     <pre><code data-trim class="python grow">
-def func(x):
+def func(x: np.ndarray):
     ...
     return result
 
 
-def vmapped_func(array):
+def vmapped_func(array: np.ndarray):
+    """array contains one more dimension than x"""
     result = []
     for element in array:
         result.append(func(x))
@@ -186,7 +190,6 @@ mapped_sq = vmap(square)  # this is a function!
 mapped_sq(a)
 # vmap(square)(a) works too!
                     </code></pre>
-                    <p>Vectorized maps apply a single function along the <em>leading axis</em> (axis 0) of an array.</p>
                 </section>
                 <section>
                     <p><code>vmap</code> takes in a function and returns another function.</p>
@@ -519,6 +522,11 @@ keys = random.split(key, num_realizations)
 grw_1000_steps = partial(grw_draw, num_steps=1000)
 final, trajectories = vmap(grw_1000_steps)(keys)
                     </code></pre>
+                </section>
+                <section>
+                    <h3>Staging out your computation</h3>
+                    <br>
+                    <p>In this multi-GRW example, we built out the computation from the repeatable elementary unit, gradually staging it outwards.</p>
                 </section>
                 <section id="exercises">
                     <h2>Exercises!</h2>
