@@ -170,7 +170,7 @@ def vmapped_func(array: np.ndarray):
     """array contains one more dimension than x"""
     result = []
     for element in array:
-        result.append(func(x))
+        result.append(func(element))
     result = np.stack(result)
     return result
                     </code></pre>
@@ -238,7 +238,7 @@ vmap(angle)(opps, adjs)
                 <section>
                     <h2>Exercises!</h2>
                     <p>We have gone through the content of the first notebook called"loopless loops". It's time now to attempt the exercises in there!</p>
-                    <small>Time budget: 20 minutes.</small>
+                    <small>Time budget: 15 minutes.</small>
                     <br>
                     <small>Ask questions in the chat, and I will respond there.</small>
                     <br>
@@ -334,7 +334,7 @@ result
                 <section id="exercises">
                     <h2>Exercises!</h2>
                     <p>We have gone through the content of the second notebook called <b>loopy carry</b>. It's time now to attempt the exercises in there!</p>
-                    <small>Time budget: 20 minutes.</small>
+                    <small>Time budget: 15 minutes.</small>
                     <br>
                     <small>Ask questions in the chat, and I will respond there.</small>
                     <br>
@@ -531,7 +531,7 @@ final, trajectories = vmap(grw_1000_steps)(keys)
                 <section id="exercises">
                     <h2>Exercises!</h2>
                     <p>We have gone through the content of the notebook called <b>deterministic randomness</b>. It's time now to attempt the exercises in there!</p>
-                    <small>Time budget: 20 minutes.</small>
+                    <small>Time budget: 15 minutes.</small>
                     <br>
                     <small>Ask questions in the chat, and I will respond there.</small>
                     <br>
@@ -649,7 +649,7 @@ mu, np.exp(log_sigma)
                 <section id="exercises">
                     <h2>Exercises!</h2>
                     <p>We have gone through the content of the notebook called <b>optimized learning</b>. It's time now to attempt the exercise in there!</p>
-                    <small>Time budget: 20 minutes.</small>
+                    <small>Time budget: 15 minutes.</small>
                     <br>
                     <small>Ask questions in the chat, and I will respond there.</small>
                     <br>
