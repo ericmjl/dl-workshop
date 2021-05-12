@@ -1,0 +1,4 @@
+#!/bin/bash
+source activate dl-workshop
+echo `which pip`
+pip install -e src/
