@@ -11,7 +11,7 @@
 
   The bold border is optional and requires some HTML. To use it:
 
-  1. Add 4 divs to the top of your HTML page:
+  1. Add 4 divs to your HTML page:
     <div class="line top"></div>
     <div class="line bottom"></div>
     <div class="line left"></div>
@@ -172,19 +172,23 @@ body {
 }
 
 .reveal h1 {
-    font-size: 3.5em;
-}
-
-.reveal h2 {
     font-size: 2.5em;
 }
 
+.reveal h2 {
+    font-size: 1.9em;
+}
+
 .reveal h3 {
-    font-size: 1.8em;
+    font-size: 1.4em;
 }
 
 .reveal h4 {
-    font-size: 1.4em;
+    font-size: 1.2em;
+}
+
+.reveal h1 {
+    text-shadow: none;
 }
 
 
@@ -430,35 +434,4 @@ body {
 .reveal .progress {
     z-index: 1000;
     color: #B48EAD;
-}
-
-
-/*********************************************
- * CUSTOM BACKGROUND COLORS
-
- These are custom colors taken directly from the Nord palette.
- *********************************************/
-
-.bg-green {
-    background-color: #A3BE8C;
-}
-
-.bg-yellow {
-    background-color: #EBCB8B;
-}
-
-.bg-blue {
-    background-color: #88C0D0;
-}
-
-.bg-red {
-    background-color: #BF616A;
-}
-
-.bg-purple {
-    background-color: #B48EAD;
-}
-
-.bg-orange {
-    background-color: #D08770;
 }
