@@ -45,7 +45,7 @@ plugins:
       lang:
         - en
   - mknotebooks:
-      execute: false
+      execute: true
       timeout: 600
       binder: true
       binder_service_name: "gh"
