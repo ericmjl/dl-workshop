@@ -16,6 +16,9 @@
     transform: scale(1.5);
 }
 
+.yuge-image {
+    size: scale(1.5);
+}
 
 /*
 Taken from: https://stackoverflow.com/questions/30861845/how-to-use-two-column-layout-with-reveal-js
@@ -61,4 +64,8 @@ img.half-height {
 
 img.half-width {
     width: 50%;
+}
+
+.yuge {
+    font-size: 4rem;
 }
