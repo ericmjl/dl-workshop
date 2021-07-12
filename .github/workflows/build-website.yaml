@@ -42,7 +42,7 @@ jobs:
         with:
           path: |
             site
-          key: os.${{ runner.os }}-env.${{ hashFiles('environment.yml') }}-env.${{ hashFiles('src') }}-env.${{ hashFiles('notebooks') }}
+          key: os.${{ runner.os }}-env.${{ hashFiles('environment.yml') }}-env.${{ hashFiles('src') }}-env.${{ hashFiles('notebooks') }}-env.${{ hashFiles('mkdocs.yml') }}
 
       - name: Build website
         if: steps.cache-website.outputs.cache-hit != 'true'
