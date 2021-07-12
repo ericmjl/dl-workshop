@@ -34,7 +34,8 @@ jobs:
         if: steps.cache-environment.outputs.cache-hit != 'true'
         run: |
           conda env create -f environment.yml
-          pip install -e src/
+          source activate dl-workshop
+          pip install -e src/.
 
       # Build cache of website
       - name: Cache HTML outputs
