@@ -85,3 +85,31 @@ def randomness_ex_3(key, num_realizations: int, grw_draw: Callable):
 
     final, trajectories = vmap(grw_1000_steps)(keys)
     return final, trajectories
+
+
+from jax import grad
+from functools import partial
+
+
+def goldfield(x, y):
+    """All credit to https://www.analyzemath.com/calculus/multivariable/maxima_minima.html for this function."""
+    return (2 * x ** 2) - (4 * x * y) + (y ** 4 + 2)
+
+
+def grad_ex_1():
+    dgoldfield = grad(goldfield, argnums=(0, 1))
+    return dgoldfield
+
+
+def grad_ex_2(x, y, dgoldfield):
+    x, y = 0.1, -0.1
+    for i in range(300):
+        dx, dy = dgoldfield(x, y)
+        x -= dx * 0.01
+        y -= dy * 0.01
+    return x, y
+
+
+def grad_ex_3():
+    dgoldfield_dx = grad(partial(goldfield, y=1.2))
+    return dgoldfield_dx
