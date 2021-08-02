@@ -6,8 +6,8 @@ dependencies:
   - black>=20.8b1
   - conda
   - ipywidgets>=7.6.3
-  - jax>=0.2.8
-  - jaxlib>=0.1.59
+  - jax<=0.2.9
+  - jaxlib<=0.1.59
   - jupyter
   - jupyterlab>=3.0.5
   - mamba
