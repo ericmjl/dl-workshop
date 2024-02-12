@@ -1,6 +1,7 @@
 """
 Answers to the main tutorial notebooks.
 """
+
 import jax.numpy as np
 import numpy.random as npr
 from jax import grad
@@ -81,7 +82,7 @@ dlogistic_loss = grad(logistic_loss)
 
 
 def f(w):
-    return w ** 2 + 3 * w - 5
+    return w**2 + 3 * w - 5
 
 
 def df(w):

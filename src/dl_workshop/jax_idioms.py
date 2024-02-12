@@ -93,7 +93,7 @@ from functools import partial
 
 def goldfield(x, y):
     """All credit to https://www.analyzemath.com/calculus/multivariable/maxima_minima.html for this function."""
-    return (2 * x ** 2) - (4 * x * y) + (y ** 4 + 2)
+    return (2 * x**2) - (4 * x * y) + (y**4 + 2)
 
 
 def grad_ex_1():
